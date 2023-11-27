@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  //URL : 'https://la-linarense.fly.dev'
-  URL: 'http://localhost:3000'
+  URL : 'https://sistema-inventario-back.onrender.com'
+  //URL: 'http://localhost:3000'
 };
