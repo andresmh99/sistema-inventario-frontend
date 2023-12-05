@@ -11,6 +11,10 @@ export class ProductosService {
   constructor(private http: HttpClient) {}
 
   url = environment.URL
+  private POKE_MOCK_POSTMAN = 'https://8be7b726-3361-4635-9173-7607c331f7a3.mock.pstmn.io/charizard';
+  getCharizard() {
+		return this.http.get(this.POKE_MOCK_POSTMAN);
+	}
 
   obtenerProductos(page: number) {
     return this.http.get<IProductos>(`${this.url}/productos`, {
@@ -34,6 +38,7 @@ export class ProductosService {
   actualizarProducto(id: string, data: any) {
     return this.http.put<IProducto>(`${this.url}/productos/${id}`, data)
   }
+
 
   /*actualizarStock(id: string, data: updateStock) {
     return this.http.put(

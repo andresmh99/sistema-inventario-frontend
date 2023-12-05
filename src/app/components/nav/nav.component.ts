@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,5 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
+
+  constructor(public loginService: LoginService){
+
+  }
 
 }

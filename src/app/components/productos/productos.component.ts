@@ -28,6 +28,7 @@ export class ProductosComponent {
 
   ngOnInit(): void {
     this.obtenerProductos(this.paginaActual);
+    this.getCharizard()
   }
 
   productos: ProductoResponse[] = [];
@@ -38,6 +39,12 @@ export class ProductosComponent {
   textoProducto: string = '';
   mensaje: string = '';
   colorAlerta: string = '';
+
+  getCharizard() {
+		this.productosService.getCharizard().subscribe((res)=>{
+      console.log(res);
+    })
+	}
 
   cambiarPagina(page: number) {
     this.paginaActual = page;
