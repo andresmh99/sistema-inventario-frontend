@@ -5,6 +5,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { LoginService } from './services/login.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 //import { initFlowbite } from 'flowbite';
 
 @Component({
@@ -12,9 +13,8 @@ import { LoginService } from './services/login.service';
   standalone: true,
   imports: [
     CommonModule,
+    DashboardComponent,
     RouterOutlet,
-    NavComponent,
-    SidebarComponent,
     NgxUiLoaderModule
   ],
   templateUrl: './app.component.html',

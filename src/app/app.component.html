@@ -1,14 +1,5 @@
-<div class="antialiased bg-gray-50 dark:bg-gray-900" ngxUiLoaderBlurred (blur)="10">
-  <ng-container  >
-    <app-nav *ngIf="loginService.loggedIn()"></app-nav>
-    <!-- Sidebar -->
-    <app-sidebar *ngIf="loginService.loggedIn()"></app-sidebar>
-    <main class="p-1 md:ml-64 h-auto pt-20 bg-gray-50 dark:bg-gray-900">
-      <router-outlet></router-outlet>
-
-    </main>
-  </ng-container>
-</div>
+<app-dashboard *ngIf="loginService.loggedIn()"></app-dashboard>
+<router-outlet *ngIf="!loginService.loggedIn()" ></router-outlet>
 <ngx-ui-loader
   bgsColor="#ffcc48"
 	text="Espere un momento..."

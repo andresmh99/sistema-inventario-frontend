@@ -1,6 +1,6 @@
 
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-  <div class="mx-auto max-w-screen-xl px-4">
+  <div class="mx-auto max-w-screen-xl px-4" *ngIf="mensaje">
     <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{colorAlerta}}-300 text-{{colorAlerta}}-800 rounded-lg bg-{{colorAlerta}}-50 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400" role="alert" *ngIf="mensaje">
       <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -23,27 +23,22 @@
      <!-- Start coding here -->
 
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-           <div class="w-full md:w-1/2">
-              <form class="flex items-center">
-                 <label for="simple-search" class="sr-only">Buscar</label>
-                 <div class="relative w-full">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                       <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                       </svg>
-                    </div>
-                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="textoProducto" [(ngModel)]="textoProducto"  (keyup)="buscarProducto()" placeholder="Buscar" required="" autofocus>
-                 </div>
-              </form>
-           </div>
+          <div class="w-full md:w-1/2">
+            <form class="flex items-center">
+               <label for="simple-search" class="sr-only">Buscar</label>
+               <div class="relative w-full">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                     <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                     </svg>
+                  </div>
+                  <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="textoUsuario" [(ngModel)]="textoUsuario"  (keyup)="buscarUsuario()" placeholder="Buscar" autofocus>
+               </div>
+            </form>
+         </div>
            <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-            <button [routerLink]="['/nuevo-producto']" routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-cyan-700 hover:bg-primary-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-cyan-700 focus:outline-none dark:focus:ring-cyan-800">
-              <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                 <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-              </svg>
-              Agregar Producto
-            </button>
               <div class="flex items-center space-x-3 w-full md:w-auto">
+                <app-agregar-usuario (respuesta)="respuesta($event)"></app-agregar-usuario>
                  <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
                     <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                        <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
@@ -102,24 +97,24 @@
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                  <tr>
                     <th scope="col" class="px-4 py-3">ID</th>
-                    <th scope="col" class="px-4 py-3">Nombre Producto</th>
-                    <th scope="col" class="px-4 py-3">Categoria</th>
-                    <th scope="col" class="px-4 py-3">Marca</th>
-                    <th scope="col" class="px-4 py-3">Stock</th>
-                    <th scope="col" class="px-4 py-3">Precio Venta</th>
+                    <th scope="col" class="px-4 py-3">Nombres</th>
+                    <th scope="col" class="px-4 py-3">Apellidos</th>
+                    <th scope="col" class="px-4 py-3">Correo Electronico</th>
+                    <th scope="col" class="px-4 py-3">Rol</th>
+                    <th scope="col" class="px-4 py-3">Nombre Usuario</th>
                     <th scope="col" class="px-4 py-3">Opciones</th>
                  </tr>
               </thead>
               <tbody>
-                 <tr class="border-b dark:border-gray-700" *ngFor="let item of productos; index as i">
+                 <tr class="border-b dark:border-gray-700" *ngFor="let item of usuarios; index as i">
                     <td class="px-4 py-3">{{item.id}}</td>
-                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><app-detalles [producto]="item">{{item.nombreProducto}}</app-detalles></th>
-                    <td class="px-4 py-3">{{item.categoria.nombreCategoria}}</td>
-                    <td class="px-4 py-3">{{item.marca}}</td>
-                    <td class="px-4 py-3">{{item.stock}}</td>
-                    <td class="px-4 py-3">{{item.precioVenta | currency}}</td>
+                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{item.nombre}}</th>
+                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{item.apellido}}</td>
+                    <td class="px-4 py-3">{{item.email}}</td>
+                    <td class="px-4 py-3">{{item.rol.nombreRol}}</td>
+                    <td class="px-4 py-3">{{item.nombreUsuario}}</td>
                     <td class="px-1 py-3 flex items-center">
-                      <app-opciones id="{{item.id}}" [producto]="item" (actualizarTabla)="actualizarTabla()">
+                      <app-opciones id="{{item.id}}" [usuario]="item" (respuesta)="respuesta($event)">
                       </app-opciones>
                     </td>
                  </tr>
@@ -158,15 +153,4 @@
      </div>
   </div>
 </section>
-
-
-
-
-
-
-
-
-
-
-
 

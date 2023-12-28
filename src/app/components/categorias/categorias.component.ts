@@ -7,15 +7,23 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ICategoria } from '../../interfaces/IProductos/producto';
 import { RespuestaBackend } from '../../interfaces/respuesta-backend';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { Categoria } from '../../interfaces/ICategorias/categorias';
+import { OpcionesComponent } from './opciones/opciones.component';
+import { NuevaCategoriaComponent } from './nueva-categoria/nueva-categoria.component';
 
 @Component({
   selector: 'app-categorias',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    OpcionesComponent,
+    NuevaCategoriaComponent,
+  ],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.css',
 })
@@ -24,12 +32,12 @@ export class CategoriasComponent {
 
   @Output() respuesta = new EventEmitter<RespuestaBackend>();
 
-  ngOnInit(): void {}
-
+  categorias: Categoria[] = [];
   mensaje: string = '';
   colorAlerta: string = '';
   modal: boolean = false;
-  categoria: ICategoria = {
+  textoCategoria: string = '';
+  categoria: Categoria = {
     id: 0,
     nombreCategoria: '',
     descripcion: '',
@@ -40,14 +48,18 @@ export class CategoriasComponent {
     descripcion: new FormControl(''),
   });
 
-  visibilidadModal() {
-    this.modal = !this.modal;
-    this.mensaje ='';
+  ngOnInit(): void {
+    this.obtenerCategorias();
   }
-
-  crearCategoria() {
+  obtenerCategorias() {
+    this.categoriasService.obtenerCategorias().subscribe((res) => {
+      this.categorias = res.categorias;
+    });
+  }
+  buscarCategoria() {
+    this.limpiarValores();
     this.categoriasService
-      .newCategory(this.form.value)
+      .buscarCategoria(this.textoCategoria)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           this.mensaje = error.error.msj;
@@ -55,15 +67,25 @@ export class CategoriasComponent {
           let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
 
           return throwError(errorMessage);
-        }))
-      .subscribe((res: any) => {
-        if (res.ok) {
-          this.categoria = res.categoria;
-          this.respuesta.emit(res);
-          this.form.reset();
-          this.modal = false;
-        }
-        this.mensaje = res.msj;
+        })
+      )
+      .subscribe((res) => {
+        this.categorias = res.categorias;
       });
+  }
+  actualizarTabla(res: any) {
+    if (res.ok) {
+      this.mensaje = res.msj;
+      this.colorAlerta = 'green';
+      this.obtenerCategorias();
+    } else {
+      this.mensaje = res.msj;
+      this.colorAlerta = 'yellow';
+    }
+  }
+  limpiarValores() {
+    this.mensaje = '';
+    this.colorAlerta = '';
+    this.categorias = [];
   }
 }

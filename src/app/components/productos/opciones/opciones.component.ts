@@ -8,6 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { ProductoResponse } from '../../../interfaces/IProductos/producto';
 import { environment } from '../../../../environments/environment';
+import { RespuestaService } from '../../../services/respuesta.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-opciones',
@@ -19,9 +21,11 @@ import { environment } from '../../../../environments/environment';
 export class OpcionesComponent {
   constructor(
     private productosService: ProductosService,
-    private categoriasService: CategoriasService
+    private categoriasService: CategoriasService,
+    private respuestaService: RespuestaService,
+    private route: Router
   ) {}
-
+  @Output() actualizarTabla: EventEmitter<void> = new EventEmitter<void>();
   @Input() id: string = '';
   categoria = {
     id: 0,
@@ -40,8 +44,6 @@ export class OpcionesComponent {
     imagen: '',
     categoria: this.categoria,
   };
-  @Output()
-  respuesta = new EventEmitter<RespuestaBackend>();
 
   url: string = environment.URL;
   img: string | ArrayBuffer = '';
@@ -51,6 +53,10 @@ export class OpcionesComponent {
   colorAlerta: string = '';
   categorias: any[] = [];
   file = new File([], '', { type: '' });
+  respuesta = {
+    mensaje: '',
+    colorAlerta: '',
+  };
 
   ngOnInit(): void {
     this.obtenerCategorias();
@@ -83,12 +89,17 @@ export class OpcionesComponent {
 
   eliminar() {
     this.modalEliminar = false;
-    this.productosService.eliminarProducto(this.id).subscribe((res: any) => {
-      this.respuesta.emit(res);
+    this.productosService.eliminarProducto(this.id).subscribe((res) => {
+      this.respuesta.mensaje = res.msj;
+      this.respuesta.colorAlerta = 'green';
+      this.route.navigate(['/productos']).then(() => {
+        this.actualizarTabla.emit();
+        this.respuestaService.enviarRespuesta(this.respuesta);
+      });
     });
   }
   obtenerCategorias() {
-    this.categoriasService.getCategories().subscribe((res: any) => {
+    this.categoriasService.obtenerCategorias().subscribe((res: any) => {
       this.categorias = res.categorias;
     });
   }
@@ -119,7 +130,8 @@ export class OpcionesComponent {
       )
       .subscribe((res) => {
         if (res.ok === true) {
-          this.respuesta.emit(res);
+          this.actualizarTabla.emit();
+
           this.form.reset();
           this.modalEditar = false;
         }

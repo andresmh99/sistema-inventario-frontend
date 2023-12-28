@@ -2,34 +2,38 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductosService } from '../../services/productos.service';
 import { FormsModule } from '@angular/forms';
-import { ProductoResponse } from '../../interfaces/IProductos/producto';
+import {
+  IProductos,
+  ProductoResponse,
+} from '../../interfaces/IProductos/producto';
 import { OpcionesComponent } from './opciones/opciones.component';
-import { RespuestaBackend } from '../../interfaces/respuesta-backend';
 import { AgregarProductoComponent } from './agregar-producto/agregar-producto.component';
 import { DetallesComponent } from './detalles/detalles.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { RespuestaService } from '../../services/respuesta.service';
 
 @Component({
   selector: 'app-productos',
   standalone: true,
+
   imports: [
     CommonModule,
     FormsModule,
     OpcionesComponent,
     AgregarProductoComponent,
     DetallesComponent,
+    RouterModule,
   ],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css',
 })
 export class ProductosComponent {
-  constructor(private productosService: ProductosService) {}
-
-  ngOnInit(): void {
-    this.obtenerProductos(this.paginaActual);
-    this.getCharizard()
-  }
+  constructor(
+    private productosService: ProductosService,
+    private respuestaService: RespuestaService
+  ) {}
 
   productos: ProductoResponse[] = [];
   paginaActual: number = 1;
@@ -40,26 +44,25 @@ export class ProductosComponent {
   mensaje: string = '';
   colorAlerta: string = '';
 
-  getCharizard() {
-		this.productosService.getCharizard().subscribe((res)=>{
-      console.log(res);
-    })
-	}
-
-  cambiarPagina(page: number) {
-    this.paginaActual = page;
+  ngOnInit(): void {
+    this.limpiarValores();
+    this.obtenerRespuesta();
     this.obtenerProductos(this.paginaActual);
+  }
+  obtenerRespuesta() {
+    this.respuestaService.obtenerRespuesta().subscribe((res) => {
+      this.mensaje = res.mensaje;
+      this.colorAlerta = res.colorAlerta;
+    });
   }
   obtenerProductos(page: number) {
     this.productosService.obtenerProductos(page).subscribe((res) => {
-      this.productos = res.productos;
-      this.numeroPaginas = res.info.pages;
-      this.totalRegistros = res.info.count;
+      this.actualizarDatosProductos(res);
     });
   }
 
   buscarProducto() {
-    this.productos = [];
+    this.limpiarValores();
     this.productosService
       .buscarProductos(this.textoProducto)
       .pipe(
@@ -72,20 +75,24 @@ export class ProductosComponent {
         })
       )
       .subscribe((res) => {
-        this.productos = res.productos;
-        this.mensaje = '';
-        this.colorAlerta = '';
+        this.actualizarDatosProductos(res);
       });
   }
-
-  respuesta(res: RespuestaBackend) {
-    if (res.ok) {
-      this.mensaje = res.msj;
-      this.colorAlerta = 'green';
-      this.obtenerProductos(this.paginaActual);
-    } else {
-      this.mensaje = 'Ha ocurrido un Error';
-      this.colorAlerta = 'yellow';
-    }
+  cambiarPagina(page: number) {
+    this.paginaActual = page;
+    this.obtenerProductos(this.paginaActual);
+  }
+  actualizarTabla() {
+    this.obtenerProductos(this.paginaActual);
+  }
+  actualizarDatosProductos(res: IProductos) {
+    this.productos = res.productos;
+    this.numeroPaginas = res.info.pages;
+    this.totalRegistros = res.info.count;
+  }
+  limpiarValores() {
+    this.mensaje = '';
+    this.colorAlerta = '';
+    this.productos = [];
   }
 }

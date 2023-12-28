@@ -13,6 +13,9 @@ import { RespuestaBackend } from '../../../interfaces/respuesta-backend';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoriasComponent } from '../../categorias/categorias.component';
+import { Router, RouterModule } from '@angular/router';
+import { RespuestaService } from '../../../services/respuesta.service';
+import { NuevaCategoriaComponent } from '../../categorias/nueva-categoria/nueva-categoria.component';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -22,6 +25,8 @@ import { CategoriasComponent } from '../../categorias/categorias.component';
     FormsModule,
     ReactiveFormsModule,
     CategoriasComponent,
+    RouterModule,
+    NuevaCategoriaComponent,
   ],
   templateUrl: './agregar-producto.component.html',
   styleUrl: './agregar-producto.component.css',
@@ -29,15 +34,15 @@ import { CategoriasComponent } from '../../categorias/categorias.component';
 export class AgregarProductoComponent {
   constructor(
     private productosService: ProductosService,
-    private categoriasService: CategoriasService
+    private categoriasService: CategoriasService,
+    private respuestaService: RespuestaService,
+    private route: Router
   ) {}
-  @Output()
-  respuesta = new EventEmitter<RespuestaBackend>();
 
   file = new File([], '', { type: '' });
   categoria = {
     id: 0,
-    nombreCategoria: '',
+    nombreCategoria: 'Seleccione Categoria',
     descripcion: '',
   };
   producto: Producto = {
@@ -52,7 +57,11 @@ export class AgregarProductoComponent {
     imagen: new File([], '', { type: '' }),
     categoria: this.categoria,
   };
-
+  respuesta = {
+    mensaje: '',
+    colorAlerta: '',
+  };
+  nuevaCategoria: boolean = false;
   categorias: any[] = [];
   mensaje: string = '';
   colorAlerta: string = '';
@@ -64,7 +73,7 @@ export class AgregarProductoComponent {
     this.obtenerCategorias();
   }
   obtenerCategorias() {
-    this.categoriasService.getCategories().subscribe((res: any) => {
+    this.categoriasService.obtenerCategorias().subscribe((res: any) => {
       this.categorias = res.categorias;
     });
   }
@@ -94,18 +103,16 @@ export class AgregarProductoComponent {
           return throwError(errorMessage);
         })
       )
-      .subscribe((res: any) => {
+      .subscribe((res) => {
         if (res.ok === true) {
-          this.respuesta.emit(res);
           this.form.reset();
-          this.modal = false;
+          this.route.navigate(['/productos']).then(() => {
+            this.respuesta.mensaje = res.msj;
+            this.respuesta.colorAlerta = 'green';
+            this.respuestaService.enviarRespuesta(this.respuesta);
+          });
         }
       });
-  }
-
-  visibilidadModal() {
-    this.modal = !this.modal;
-    this.mensaje ='';
   }
 
   imgSeleccionada(event: Event) {
@@ -129,6 +136,18 @@ export class AgregarProductoComponent {
     } else {
       this.mensaje = 'Ha ocurrido un Error';
       this.colorAlerta = 'yellow';
+    }
+  }
+  mostrarNuevaCategoria() {
+    this.nuevaCategoria = !this.nuevaCategoria;
+  }
+  actualizarTabla(res: any) {
+    if (res.ok) {
+      this.colorAlerta = 'green';
+      this.mensaje = res.msj;
+      this.categoria = res.categoria;
+      this.obtenerCategorias();
+      this.mostrarNuevaCategoria();
     }
   }
 }

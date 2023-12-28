@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { ICategoria } from '../interfaces/ICategorias/categorias';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +14,16 @@ export class CategoriasService {
     this.url = environment.URL
   }
 
-  getCategories(){
-    return this.http.get(`${this.url}/categoria`);
+  obtenerCategorias(){
+    return this.http.get<ICategoria>(`${this.url}/categoria`);
   }
-  newCategory(data: any){
+  crearCategoria(data: any){
     return this.http.post(`${this.url}/categoria`, data );
+  }
+  eliminarCategoria(id: string){
+    return this.http.delete(`${this.url}/categoria/${id}` );
+  }
+  buscarCategoria(word: string) {
+    return this.http.get<ICategoria>(`${this.url}/categoria/buscar?s=${word}`)
   }
 }

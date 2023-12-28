@@ -28,13 +28,13 @@
         </svg>
         <p class="m-2 text-gray-500 dark:text-gray-300">¿Estás seguro que deseas eliminar el registro?</p>
         <ul class="mb-4 text-gray-500 dark:text-gray-300">
-          <li>Nombre Producto: <b>{{producto.nombreProducto}}</b> </li>
+          <li>Nombre Producto: <b>{{usuario.nombre | titlecase}} {{usuario.apellido | titlecase}}</b> </li>
         </ul>
         <div class="flex justify-center items-center space-x-4">
            <button  type="button" (click)="visibilidadModalEliminar()" class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
            No, cancelar
            </button>
-           <button type="submit" (click)="eliminar()" class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+           <button type="submit" (click)="eliminarUsuario()" class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
            Confirmar
            </button>
         </div>
@@ -51,7 +51,7 @@
         <!-- Modal header -->
         <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Actualizar Producto: <b>{{producto.nombreProducto | titlecase}}</b>
+              Actualizar Usuario: <b>{{usuario.nombre| titlecase}} {{usuario.apellido | titlecase}}</b>
            </h3>
            <button type="button" (click)="visibilidadModalEditar()"  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
               <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -61,8 +61,7 @@
            </button>
         </div>
         <!-- Modal body -->
-        <form class="needs-validation" novalidate (ngSubmit)="editarProducto()"
-         [formGroup]="form">
+        <form class="needs-validation" novalidate (ngSubmit)="actualizarUsuario()" [formGroup]="form">
         <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{colorAlerta}}-300 text-{{colorAlerta}}-800 rounded-lg bg-{{colorAlerta}}-50 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400" role="alert" *ngIf="mensaje">
           <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -81,60 +80,47 @@
         <div class="grid gap-4 mb-4 sm:grid-cols-2">
 
            <div>
-              <label for="nombreProducto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre producto:</label>
-              <input type="text" name="nombreProducto" id="nombreProducto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{producto.nombreProducto}}"  required formControlName="nombreProducto">
+              <label for="nombreUsuario" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre Usuario:</label>
+              <input type="text" name="nombreUsuario" id="nombreUsuario" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{usuario.nombreUsuario}}"  required formControlName="nombreUsuario">
            </div>
            <div>
-              <label for="marca" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Marca:</label>
-              <input type="text" name="marca" id="marca" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{producto.marca}}" formControlName="marca">
+            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{usuario.nombre}}" formControlName="nombre" >
+         </div>
+           <div>
+              <label for="apellido" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos:</label>
+              <input type="text" name="apellido" id="apellido" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{usuario.apellido}}" formControlName="apellido">
            </div>
            <div>
-              <label for="sku" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">SKU:</label>
-              <input type="text" name="sku" id="sku" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{producto.sku}}"  formControlName="sku">
-           </div>
-           <div>
-              <label for="stock" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock:</label>
-              <input type="number" name="stock" id="stock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{producto.stock}}" formControlName="stock" min="0">
-           </div>
-           <div>
-              <label for="precioVenta" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Venta:</label>
-              <input type="number" name="precioVenta" id="precioVenta" min="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$ {{producto.precioVenta}}" formControlName="precioVenta">
-           </div>
-           <div>
-              <label for="precioCompra" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio Compra:</label>
-              <input type="number" name="precioCompra" id="precioCompra" min="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$ {{producto.precioCompra}}" formControlName="precioCompra">
-           </div>
-           <div>
-              <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
-              <select id="categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="idCategory"
-             formControlName="categoria">
-              <option selected="" disabled>Seleccione Categoria</option>
-              <option value="{{item.id}}" *ngFor="let item of categorias">{{item.nombreCategoria}}</option>
-              </select>
+              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo Eléctronico:</label>
+              <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{usuario.email}}"  formControlName="email">
            </div>
 
            <div>
-              <label for="imagen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagen:</label>
-              <input type="file" name="imagen" id="imagen" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" formControlName="imagen" (change)="imgSeleccionada($event)">
+              <label for="precioVenta" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña:</label>
+              <input type="text" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="*********" formControlName="password">
            </div>
            <div>
-            <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vista previa:</label>
-            <img [src]="img ||
-              '../../../assets/img/woocommerce-placeholder.png'"
-              width="100px" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" >
-          </div>
-           <div class="sm:col-span-2">
-              <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripción:</label>
-              <textarea id="descripcion" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="{{producto.descripcion}}" formControlName="descripcion"></textarea>
+              <label for="rolId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rol:</label>
+              <select id="rolId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="rolId"
+             formControlName="rolId">
+              <option selected="" disabled>Seleccione Rol</option>
+              <option value="{{item.id}}" *ngFor="let item of roles">{{item.nombreRol}}</option>
+              </select>
            </div>
+
+
+
+
         </div>
         <button type="submit" class="text-white inline-flex items-center bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
            <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
            </svg>
-           Actualizar Producto
+           Actualizar Usuario
         </button>
         </form>
      </div>
   </div>
 </div>
+
