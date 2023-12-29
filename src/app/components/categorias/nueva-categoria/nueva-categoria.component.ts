@@ -11,10 +11,9 @@ import { Categoria } from '../../../interfaces/ICategorias/categorias';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './nueva-categoria.component.html',
-  styleUrl: './nueva-categoria.component.css'
+  styleUrl: './nueva-categoria.component.css',
 })
 export class NuevaCategoriaComponent {
-
   constructor(private categoriasService: CategoriasService) {}
 
   @Output() respuesta: EventEmitter<void> = new EventEmitter<void>();
@@ -24,6 +23,7 @@ export class NuevaCategoriaComponent {
     id: 0,
     nombreCategoria: '',
     descripcion: '',
+    _count: { productos: 0 },
   };
 
   form = new FormGroup({

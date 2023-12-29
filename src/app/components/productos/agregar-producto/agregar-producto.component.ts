@@ -16,6 +16,7 @@ import { CategoriasComponent } from '../../categorias/categorias.component';
 import { Router, RouterModule } from '@angular/router';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { NuevaCategoriaComponent } from '../../categorias/nueva-categoria/nueva-categoria.component';
+import { Categoria } from '../../../interfaces/ICategorias/categorias';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -40,10 +41,13 @@ export class AgregarProductoComponent {
   ) {}
 
   file = new File([], '', { type: '' });
-  categoria = {
+  categoria: Categoria = {
     id: 0,
     nombreCategoria: 'Seleccione Categoria',
     descripcion: '',
+    _count: {
+      productos: 0,
+    },
   };
   producto: Producto = {
     id: 0,

@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../services/login.service';
-import { Usuario } from '../../interfaces/IUsuarios/usuarios';
-import { RouterModule } from '@angular/router';
+import { Usuario } from '../../../interfaces/IUsuarios/usuarios';
 
 @Component({
-  selector: 'app-nav',
+  selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css',
+  imports: [CommonModule],
+  templateUrl: './perfil.component.html',
+  styleUrl: './perfil.component.css'
 })
-export class NavComponent {
-  constructor(public loginService: LoginService) {}
+export class PerfilComponent {
+
+  constructor() {}
 
   usuario: Usuario = {
     id: 0,
@@ -35,4 +34,5 @@ export class NavComponent {
       this.usuario = JSON.parse(perfil);
     }
   }
+
 }

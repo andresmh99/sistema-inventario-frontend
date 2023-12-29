@@ -100,16 +100,18 @@
                        <th scope="col" class="px-4 py-3">ID</th>
                        <th scope="col" class="px-4 py-3">Nombre Categoria</th>
                        <th scope="col" class="px-4 py-3">Descripción</th>
+                       <th scope="col" class="px-4 py-3">N° Productos</th>
                        <th scope="col" class="px-4 py-3">Opciones</th>
                     </tr>
                  </thead>
                  <tbody>
                     <tr class="border-b dark:border-gray-700" *ngFor="let item of categorias; index as i">
                        <td class="px-4 py-3">{{item.id}}</td>
-                       <td class="px-4 py-3">{{item.nombreCategoria}}</td>
+                       <td class="px-4 py-3">{{item.nombreCategoria | titlecase}}</td>
                        <td class="px-4 py-3">{{item.descripcion}}</td>
+                       <td class="px-4 py-3">{{item._count.productos | number}}</td>
                        <td class="px-1 py-3 flex items-center">
-                          <app-opciones id="{{item.id}}" [categoria]="item" (actualizarTabla)="actualizarTabla($event)"></app-opciones>
+                          <app-opciones id="{{item.id}}" [categoria]="item" (actualizarTabla)="actualizarTabla($event)" *ngIf="item.id !== 1"></app-opciones>
                        </td>
                     </tr>
                  </tbody>

@@ -41,6 +41,9 @@ export class CategoriasComponent {
     id: 0,
     nombreCategoria: '',
     descripcion: '',
+    _count: {
+      productos: 0,
+    },
   };
 
   form = new FormGroup({
@@ -54,6 +57,20 @@ export class CategoriasComponent {
   obtenerCategorias() {
     this.categoriasService.obtenerCategorias().subscribe((res) => {
       this.categorias = res.categorias;
+      // Filtrar las categorías excluyendo la categoría sin categoría (id = 1)
+      const categoriasFiltradas = this.categorias.filter(
+        (categoria) => categoria.id !== 1
+      );
+
+      // Obtener la categoría sin categoría (id = 1)
+      const categoriaPredeterminada = this.categorias.find(
+        (categoria) => categoria.id === 1
+      );
+
+      if (categoriaPredeterminada) {
+        // Ordenar las categorías y agregar la categoría sin categoría al principio del arreglo
+        this.categorias = [categoriaPredeterminada, ...categoriasFiltradas];
+      }
     });
   }
   buscarCategoria() {

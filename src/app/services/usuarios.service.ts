@@ -30,7 +30,7 @@ export class UsuariosService {
     );
   }
   crearUsuario(data: any) {
-    return this.http.post<HttpResponse<IUsuario>>(
+    return this.http.post<IUsuario>(
       `${this.url}/usuarios`,
       data,
       { observe: 'response' }

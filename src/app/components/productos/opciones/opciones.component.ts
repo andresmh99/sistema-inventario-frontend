@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductosService } from '../../../services/productos.service';
-import { RespuestaBackend } from '../../../interfaces/respuesta-backend';
 import { CategoriasService } from '../../../services/categorias.service';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,6 +9,7 @@ import { ProductoResponse } from '../../../interfaces/IProductos/producto';
 import { environment } from '../../../../environments/environment';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { Router } from '@angular/router';
+import { Categoria } from '../../../interfaces/ICategorias/categorias';
 
 @Component({
   selector: 'app-opciones',
@@ -27,10 +27,13 @@ export class OpcionesComponent {
   ) {}
   @Output() actualizarTabla: EventEmitter<void> = new EventEmitter<void>();
   @Input() id: string = '';
-  categoria = {
+  categoria: Categoria = {
     id: 0,
     nombreCategoria: '',
     descripcion: '',
+    _count: {
+      productos: 0,
+    },
   };
   @Input() producto: ProductoResponse = {
     id: 0,

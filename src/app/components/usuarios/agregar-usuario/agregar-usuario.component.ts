@@ -2,13 +2,14 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { RolService } from '../../../services/rol.service';
-import { RespuestaBackend } from '../../../interfaces/respuesta-backend';
 import { Usuario } from '../../../interfaces/IAuth';
 import { Rol } from '../../../interfaces/IRoles/roles';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { IUsuario } from '../../../interfaces/IUsuarios/usuarios';
+import { RespuestaService } from '../../../services/respuesta.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-usuario',
@@ -20,11 +21,11 @@ import { IUsuario } from '../../../interfaces/IUsuarios/usuarios';
 export class AgregarUsuarioComponent {
   constructor(
     private usuarioService: UsuariosService,
-    private rolService: RolService
+    private rolService: RolService,
+    private respuestaService: RespuestaService,
+    private route: Router
   ) {}
 
-  @Output()
-  respuesta = new EventEmitter<HttpResponse<IUsuario>>();
   usuario: Usuario = {
     id: 0,
     nombreUsuario: '',
@@ -36,10 +37,11 @@ export class AgregarUsuarioComponent {
       nombreRol: '',
     },
   };
-  mensaje: string = '';
-  colorAlerta: string = '';
+  respuesta = {
+    mensaje: '',
+    colorAlerta: '',
+  };
   roles: Rol[] = [];
-  modal: boolean = false;
 
   ngOnInit(): void {
     this.obtenerRoles();
@@ -65,8 +67,8 @@ export class AgregarUsuarioComponent {
       .crearUsuario(this.form.value)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.mensaje = error.error.msj;
-          this.colorAlerta = 'yellow';
+          this.respuesta.mensaje = error.error.msj;
+          this.respuesta.colorAlerta = 'yellow';
           let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
 
           return throwError(errorMessage);
@@ -74,15 +76,15 @@ export class AgregarUsuarioComponent {
       )
       .subscribe((res) => {
         if (res.status === 200 && res.body) {
-          this.respuesta.emit(res.body);
-          this.form.reset();
-          this.modal = false;
+          if (res.body.ok) {
+            this.respuesta.mensaje = res.body.msj;
+            this.respuesta.colorAlerta = 'green';
+            this.form.reset();
+            this.route.navigate(['/usuarios']).then(() => {
+              this.respuestaService.enviarRespuesta(this.respuesta);
+            });
+          }
         }
       });
-  }
-
-  visibilidadModal() {
-    this.modal = !this.modal;
-    this.mensaje = '';
   }
 }

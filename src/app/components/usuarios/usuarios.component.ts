@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuariosService } from '../../services/usuarios.service';
-import { IUsuario, Usuario } from '../../interfaces/IUsuarios/usuarios';
+import {  Usuario } from '../../interfaces/IUsuarios/usuarios';
 import { OpcionesComponent } from './opciones/opciones.component';
-import { AgregarUsuarioComponent } from './agregar-usuario/agregar-usuario.component';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { RespuestaService } from '../../services/respuesta.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -14,14 +15,17 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     OpcionesComponent,
-    AgregarUsuarioComponent,
     FormsModule,
+    RouterModule,
   ],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css',
 })
 export class UsuariosComponent {
-  constructor(private usuariosService: UsuariosService) {}
+  constructor(
+    private usuariosService: UsuariosService,
+    private respuestaService: RespuestaService
+  ) {}
 
   usuarios: Usuario[] = [];
   paginaActual: number = 1;
@@ -34,6 +38,13 @@ export class UsuariosComponent {
 
   ngOnInit(): void {
     this.obtenerUsuarios(this.paginaActual);
+    this.obtenerRespuesta();
+  }
+  obtenerRespuesta() {
+    this.respuestaService.obtenerRespuesta().subscribe((res) => {
+      this.mensaje = res.mensaje;
+      this.colorAlerta = res.colorAlerta;
+    });
   }
 
   obtenerUsuarios(page: number) {

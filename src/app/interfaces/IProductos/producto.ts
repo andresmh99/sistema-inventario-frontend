@@ -35,6 +35,8 @@ export interface ProductoResponse {
   stock: number;
   imagen: string;
   categoria: Categoria;
+  public_image_id?: string,
+  secure_image_url?: string,
 }
 export interface Info {
   count: number;

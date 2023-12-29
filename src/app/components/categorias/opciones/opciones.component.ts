@@ -22,6 +22,9 @@ export class OpcionesComponent {
     id: 0,
     nombreCategoria: '',
     descripcion: '',
+    _count: {
+      productos: 0,
+    },
   };
 
   url: string = environment.URL;
