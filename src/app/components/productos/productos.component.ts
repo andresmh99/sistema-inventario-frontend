@@ -57,7 +57,9 @@ export class ProductosComponent {
   }
   obtenerProductos(page: number) {
     this.productosService.obtenerProductos(page).subscribe((res) => {
-      this.actualizarDatosProductos(res);
+      if(res.body){
+        this.actualizarDatosProductos(res.body);
+      }
     });
   }
 
@@ -75,7 +77,9 @@ export class ProductosComponent {
         })
       )
       .subscribe((res) => {
-        this.actualizarDatosProductos(res);
+        if(res.body){
+          this.actualizarDatosProductos(res.body);
+        }
       });
   }
   cambiarPagina(page: number) {

@@ -108,11 +108,12 @@ export class AgregarProductoComponent {
         })
       )
       .subscribe((res) => {
-        if (res.ok === true) {
+        if (res.body && res.body.ok) {
           this.form.reset();
+          this.respuesta.mensaje = res.body.msj;
+          this.respuesta.colorAlerta = 'green';
           this.route.navigate(['/productos']).then(() => {
-            this.respuesta.mensaje = res.msj;
-            this.respuesta.colorAlerta = 'green';
+
             this.respuestaService.enviarRespuesta(this.respuesta);
           });
         }

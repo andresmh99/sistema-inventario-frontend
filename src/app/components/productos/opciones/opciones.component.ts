@@ -93,8 +93,10 @@ export class OpcionesComponent {
   eliminar() {
     this.modalEliminar = false;
     this.productosService.eliminarProducto(this.id).subscribe((res) => {
-      this.respuesta.mensaje = res.msj;
-      this.respuesta.colorAlerta = 'green';
+      if (res.body) {
+        this.respuesta.mensaje = res.body.msj;
+        this.respuesta.colorAlerta = 'green';
+      }
       this.route.navigate(['/productos']).then(() => {
         this.actualizarTabla.emit();
         this.respuestaService.enviarRespuesta(this.respuesta);
