@@ -22,7 +22,7 @@ export class ProductosService {
       observe: 'response',
     });
   }
-  crearProducto(data: any) {
+  crearProducto(data: FormData) {
     return this.http.post<IProducto>(`${this.url}/productos`, data, {
       observe: 'response',
     });

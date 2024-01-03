@@ -6,6 +6,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { ProductosService } from '../../../services/productos.service';
 import { CategoriasService } from '../../../services/categorias.service';
@@ -17,6 +18,7 @@ import { Router, RouterModule } from '@angular/router';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { NuevaCategoriaComponent } from '../../categorias/nueva-categoria/nueva-categoria.component';
 import { Categoria } from '../../../interfaces/ICategorias/categorias';
+import { arrayBuffer } from 'stream/consumers';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -91,39 +93,46 @@ export class AgregarProductoComponent {
     sku: new FormControl(''),
     marca: new FormControl(''),
     stock: new FormControl(''),
-    imagen: new FormControl(''),
+    imagen: new FormControl(),
+    sourceFile: new FormControl(),
     categoria: new FormControl(''),
   });
 
   crearProducto() {
-    this.productosService
-      .crearProducto(this.form.value)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.mensaje = error.error.msj;
-          this.colorAlerta = 'yellow';
-          let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
+    const form: any = document.getElementById('form');
+    const submitter = document.getElementById('btnSubmit');
+    if (form) {
+      const formData = new FormData(form, submitter);
 
-          return throwError(errorMessage);
-        })
-      )
-      .subscribe((res) => {
-        if (res.body && res.body.ok) {
-          this.form.reset();
-          this.respuesta.mensaje = res.body.msj;
-          this.respuesta.colorAlerta = 'green';
-          this.route.navigate(['/productos']).then(() => {
+      this.productosService
+        .crearProducto(formData)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            this.mensaje = error.error.msj;
+            this.colorAlerta = 'yellow';
+            let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
 
-            this.respuestaService.enviarRespuesta(this.respuesta);
-          });
-        }
-      });
+            return throwError(errorMessage);
+          })
+        )
+        .subscribe((res) => {
+          if (res.body && res.body.ok) {
+            this.form.reset();
+            this.respuesta.mensaje = res.body.msj;
+            this.respuesta.colorAlerta = 'green';
+            this.route.navigate(['/productos']).then(() => {
+              this.respuestaService.enviarRespuesta(this.respuesta);
+            });
+          }
+        });
+    }
   }
 
   imgSeleccionada(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       this.file = file;
+      this.form.patchValue({ sourceFile: this.file });
       const reader = new FileReader();
       reader.onload = (e) => {
         if (typeof reader.result === 'string') {
