@@ -3,8 +3,8 @@
   {{producto.nombreProducto}}
 </button>
 
-<div class="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-20" *ngIf="modal">
-  <div  class="overflow-y-auto fixed top-0 left-0 z-30 p-4 w-full max-w-lg h-screen bg-white transition-transform  dark:bg-gray-800" tabindex="-1" [class.-translate-x-full]="!modal" [class.transform-none]="modal">
+<div class="bg-gray-900 bg-opacity-50  dark:bg-opacity-80 fixed inset-0 z-20" *ngIf="modal">
+  <div  class="overflow-y-auto fixed top-14 left-0 z-30 p-4 w-full max-w-lg h-screen bg-white transition-transform  dark:bg-gray-800" tabindex="-1" [class.-translate-x-full]="!modal" [class.transform-none]="modal">
     <div>
         <h4 id="read-drawer-label" class="mb-1.5 leading-none text-xl font-semibold text-gray-900 dark:text-white">{{producto.nombreProducto}}</h4>
         <h5 class="mb-5 text-xl font-bold text-gray-900 dark:text-white">{{producto.precioVenta}}</h5>

@@ -33,13 +33,14 @@ export class LoginComponent {
     password: '',
   };
 
+
   form = new FormGroup({
     usuario: new FormControl(
       '',
       Validators.compose([
         Validators.required,
         Validators.minLength(3),
-        Validators.email,
+        Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
       ])
     ),
     password: new FormControl(
@@ -50,8 +51,7 @@ export class LoginComponent {
 
   login() {
     const data = {
-      email: this.form.value.usuario,
-      nombreUsuario: this.form.value.usuario,
+      usuario: this.form.value.usuario,
       password: this.form.value.password,
     };
 
@@ -68,10 +68,12 @@ export class LoginComponent {
           })
         )
         .subscribe((res) => {
-          this.token = res.token;
-          localStorage.setItem('token', this.token);
-          localStorage.setItem('identity', JSON.stringify(res.usuario));
-          this.router.navigate(['/dasboard']);
+          if (res.body && res.body.ok) {
+            this.token = res.body.token;
+            localStorage.setItem('token', this.token);
+            localStorage.setItem('identity', JSON.stringify(res.body.usuario));
+            this.router.navigate(['/dasboard']);
+          }
         });
     } else {
       this.mensaje = 'Todos los campos son requeridos';

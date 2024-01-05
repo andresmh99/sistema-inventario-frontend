@@ -3,29 +3,30 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { IAuthResponse } from '../interfaces/IAuth';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService {
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor(private http: HttpClient, private router: Router) { }
+  url = environment.URL;
 
-  url = environment.URL
-
-  iniciarSesion (data: any) {
-    return this.http.post<IAuthResponse>(`${this.url}/signin`, data)
+  iniciarSesion(data: any) {
+    return this.http.post<IAuthResponse>(`${this.url}/signin`, data, {
+      observe: 'response',
+    });
   }
 
-  loggedIn(): Boolean{
+  loggedIn(): Boolean {
     const token = localStorage.getItem('token');
     if (token) {
       const tokenInfo: any = jwtDecode(token);
       const currentDate = new Date().getTime() / 1000;
       if (tokenInfo.exp < currentDate) {
         localStorage.removeItem('token');
-        localStorage.removeItem('identity')
+        localStorage.removeItem('identity');
         return false;
       } else {
         return true;
@@ -35,10 +36,10 @@ export class LoginService {
     }
   }
 
-  obtenerToken(){
+  obtenerToken() {
     return localStorage.getItem('token');
   }
-  cerrarSesion(){
+  cerrarSesion() {
     localStorage.removeItem('token');
     localStorage.removeItem('identity');
     this.router.navigate(['/']);

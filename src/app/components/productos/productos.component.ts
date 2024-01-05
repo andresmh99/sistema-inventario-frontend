@@ -39,7 +39,6 @@ export class ProductosComponent {
   paginaActual: number = 1;
   numeroPaginas: number = 0;
   totalRegistros: number = 0;
-  numeroDeRegistros: number = 0;
   textoProducto: string = '';
   mensaje: string = '';
   colorAlerta: string = '';
@@ -57,7 +56,7 @@ export class ProductosComponent {
   }
   obtenerProductos(page: number) {
     this.productosService.obtenerProductos(page).subscribe((res) => {
-      if(res.body){
+      if (res.body) {
         this.actualizarDatosProductos(res.body);
       }
     });
@@ -77,7 +76,7 @@ export class ProductosComponent {
         })
       )
       .subscribe((res) => {
-        if(res.body){
+        if (res.body) {
           this.actualizarDatosProductos(res.body);
         }
       });
@@ -91,6 +90,20 @@ export class ProductosComponent {
   }
   actualizarDatosProductos(res: IProductos) {
     this.productos = res.productos;
+    this.productos.forEach((producto) => {
+      if (producto.secure_image_url) {
+        let arrayImg = producto.secure_image_url.split('/');
+
+        // Insertar miniatura de 50px desde cloudinary
+        arrayImg.splice(6, 0, 't_100pxh');
+
+        // Volver a unir las partes con "/"
+        producto.secure_image_url = arrayImg.join('/');
+      } else {
+        producto.secure_image_url =
+          '../../../assets/img/woocommerce-placeholder.png';
+      }
+    });
     this.numeroPaginas = res.info.pages;
     this.totalRegistros = res.info.count;
   }

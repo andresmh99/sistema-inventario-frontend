@@ -8,6 +8,7 @@ import { CategoriasComponent } from './components/categorias/categorias.componen
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
 import { AgregarUsuarioComponent } from './components/usuarios/agregar-usuario/agregar-usuario.component';
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -44,6 +45,11 @@ export const routes: Routes = [
   {
     path: 'nuevo-usuario',
     component: AgregarUsuarioComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'proveedores',
+    component: ProveedoresComponent,
     canActivate: [AuthGuard],
   },
   {

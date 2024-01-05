@@ -49,9 +49,13 @@ export class DetallesComponent {
   }
   visualizarImg() {
     if (this.producto.secure_image_url) {
-      this.img = this.producto.secure_image_url;
-    } else {
-      this.img = '../../../../assets/img/woocommerce-placeholder.png';
+      let arrayImg = this.producto.secure_image_url.split('/');
+
+      // Insertar miniatura de 500px desde cloudinary
+      arrayImg.splice(6, 1, 't_500pxh');
+
+      // Volver a unir las partes con "/"
+      this.img = arrayImg.join('/');
     }
   }
 }

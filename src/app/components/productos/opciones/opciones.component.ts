@@ -50,12 +50,15 @@ export class OpcionesComponent {
 
   url: string = environment.URL;
   img: string | ArrayBuffer = '';
+  nuevaCategoria: boolean = false;
   modalEliminar: boolean = false;
   modalEditar: boolean = false;
   mensaje: string = '';
   colorAlerta: string = '';
   categorias: any[] = [];
   file = new File([], '', { type: '' });
+  vistaPreviaImg: string | ArrayBuffer =
+  '../../../../assets/img/woocommerce-placeholder.png';
   respuesta = {
     mensaje: '',
     colorAlerta: '',
@@ -148,6 +151,28 @@ export class OpcionesComponent {
       this.img = this.url + '/' + this.producto.imagen;
     } else {
       this.img = '../../../../assets/img/woocommerce-placeholder.png';
+    }
+  }
+  respuestaCategoria(res: any) {
+    if (res.ok) {
+      this.colorAlerta = 'green';
+      this.mensaje = res.msj;
+      this.obtenerCategorias();
+    } else {
+      this.mensaje = 'Ha ocurrido un Error';
+      this.colorAlerta = 'yellow';
+    }
+  }
+  mostrarNuevaCategoria() {
+    this.nuevaCategoria = !this.nuevaCategoria;
+  }
+  actualizarTablaCategorias(res: any) {
+    if (res.ok) {
+      this.colorAlerta = 'green';
+      this.mensaje = res.msj;
+      this.categoria = res.categoria;
+      this.obtenerCategorias();
+      this.mostrarNuevaCategoria();
     }
   }
 }
