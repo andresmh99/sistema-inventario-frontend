@@ -1,7 +1,7 @@
 export interface IProveedor {
-  ok:          boolean;
-  info:        Info;
-  msj:         string;
+  ok: boolean;
+  info: Info;
+  msj: string;
   proveedores: Proveedor[];
 }
 
@@ -11,13 +11,13 @@ export interface Info {
 }
 
 export interface Proveedor {
-  id:        number;
-  nombre:    string;
-  telefono:  null | string;
-  email:     null | string;
+  id: number;
+  nombre: string;
+  telefono: null | string;
+  email: null | string;
   direccion: null | string;
-  contacto:  null | string;
-  _count:    Count;
+  contacto: null | string;
+  _count?: Count;
 }
 
 export interface Count {

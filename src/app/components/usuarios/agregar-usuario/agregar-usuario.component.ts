@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsuariosService } from '../../../services/usuarios.service';
 import { RolService } from '../../../services/rol.service';
@@ -6,8 +6,7 @@ import { Usuario } from '../../../interfaces/IAuth';
 import { Rol } from '../../../interfaces/IRoles/roles';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { IUsuario } from '../../../interfaces/IUsuarios/usuarios';
+import { HttpErrorResponse} from '@angular/common/http';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { Router } from '@angular/router';
 

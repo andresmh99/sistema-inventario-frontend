@@ -6,11 +6,12 @@ import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { OpcionesComponent } from './opciones/opciones.component';
 
 @Component({
   selector: 'app-proveedores',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, OpcionesComponent],
   templateUrl: './proveedores.component.html',
   styleUrl: './proveedores.component.css',
 })
@@ -57,8 +58,8 @@ export class ProveedoresComponent {
   }
   actualizarDatosProductos(res: IProveedor) {
     this.proveedores = res.proveedores;
-     // Filtrar las categorías excluyendo la categoría sin categoría (id = 1)
-     const proveedoresFiltrados = this.proveedores.filter(
+    // Filtrar las categorías excluyendo la categoría sin categoría (id = 1)
+    const proveedoresFiltrados = this.proveedores.filter(
       (proveedor) => proveedor.id !== 1
     );
 
@@ -85,5 +86,15 @@ export class ProveedoresComponent {
   }
   actualizarTabla() {
     this.obtenerProveedores(this.paginaActual);
+  }
+  respuesta(res: any) {
+    if (res.ok) {
+      this.mensaje = res.msj;
+      this.colorAlerta = 'green';
+      this.obtenerProveedores(this.paginaActual);
+    } else {
+      this.mensaje = res.msj;
+      this.colorAlerta = 'yellow';
+    }
   }
 }

@@ -12,21 +12,21 @@ export class ProveedoresService {
   url = environment.URL;
 
   obtenerProveedores(page: number) {
-    return this.http.get<IProveedor>(`${this.url}/proveedor`, {
+    return this.http.get<IProveedor>(`${this.url}/proveedores`, {
       params: { page: page },
       observe: 'response',
     });
   }
 
   eliminarProveedor(id: string) {
-    return this.http.delete<HttpResponse<any>>(`${this.url}/proveedor/${id}`, {
+    return this.http.delete<HttpResponse<any>>(`${this.url}/proveedores/${id}`, {
       observe: 'response',
     });
   }
 
   actualizarProveedor(id: string, data: any) {
     return this.http.put<HttpResponse<IProveedor>>(
-      `${this.url}/proveedor/${id}`,
+      `${this.url}/proveedores/${id}`,
       data,
       { observe: 'response' }
     );
@@ -34,14 +34,14 @@ export class ProveedoresService {
 
   crearProveedor(data: any) {
     return this.http.post<IProveedor>(
-      `${this.url}/proveedor`,
+      `${this.url}/proveedores`,
       data,
       { observe: 'response' }
     );
   }
 
   buscarProveedor(texto: string) {
-    return this.http.get<IProveedor>(`${this.url}/proveedor/buscar?s=${texto}`, {
+    return this.http.get<IProveedor>(`${this.url}/proveedores/buscar?s=${texto}`, {
       observe: 'response',
     });
   }

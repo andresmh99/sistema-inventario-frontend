@@ -4,9 +4,9 @@ import { UsuariosService } from '../../../services/usuarios.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RolService } from '../../../services/rol.service';
 import { IUsuario, Usuario } from '../../../interfaces/IUsuarios/usuarios';
-import { RespuestaBackend } from '../../../interfaces/respuesta-backend';
-import { IRol, Rol } from '../../../interfaces/IRoles/roles';
-import { HttpResponse } from '@angular/common/http';
+import { Rol } from '../../../interfaces/IRoles/roles';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-opciones',
@@ -68,31 +68,57 @@ export class OpcionesComponent {
     this.modalEditar = !this.modalEditar;
     if (!this.modalEditar) {
       this.form.reset();
+    } else {
+      this.form.patchValue({
+        nombreUsuario: this.usuario.nombreUsuario,
+        nombre: this.usuario.nombre,
+        apellido: this.usuario.apellido,
+        email: this.usuario.email,
+      });
     }
   }
   actualizarUsuario() {
-    this.usuarioService
-      .actualizarUsuario(this.id, this.form.value)
-      .subscribe((res) => {
-        if (res.status === 200 && res.body) {
-          this.respuesta.emit(res.body);
-          this.modalEditar = false;
-        } else {
-          this.mensaje = 'El registro no ha sido actualizado';
-          this.colorAlerta = 'yellow';
-        }
-      });
+    if (this.form.valid) {
+      this.usuarioService
+        .actualizarUsuario(this.id, this.form.value)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = error.error.msj;
+            this.respuesta.emit(error.error);
+            return throwError(errorMessage);
+          })
+        )
+        .subscribe((res) => {
+          if (res.status === 200 && res.body) {
+            this.respuesta.emit(res.body);
+            this.modalEditar = false;
+          } else {
+            this.mensaje = 'El registro no ha sido actualizado';
+            this.colorAlerta = 'yellow';
+          }
+        });
+    }
   }
 
   eliminarUsuario() {
-    this.usuarioService.eliminarUsuario(this.id).subscribe((res) => {
-      if (res.status === 200 && res.body) {
-        this.respuesta.emit(res.body);
-        this.modalEliminar = false;
-      } else {
-        this.mensaje = 'El registro no ha sido eliminado';
-        this.colorAlerta = 'yellow';
-      }
-    });
+    this.usuarioService
+      .eliminarUsuario(this.id)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.modalEliminar = false;
+          let errorMessage = error.error.msj;
+          this.respuesta.emit(error.error);
+          return throwError(errorMessage);
+        })
+      )
+      .subscribe((res) => {
+        if (res.status === 200 && res.body) {
+          this.respuesta.emit(res.body);
+          this.modalEliminar = false;
+        } else {
+          this.mensaje = 'El registro no ha sido eliminado';
+          this.colorAlerta = 'yellow';
+        }
+      });
   }
 }

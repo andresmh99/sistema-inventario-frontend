@@ -23,7 +23,6 @@ export const ErrorApiInterceptor = (
         localStorage.removeItem('token');
         localStorage.removeItem('identity');
         router.navigate(['/']);
-        console.log('fuera');
         ngxService.stop();
       }
       return throwError(() => error);

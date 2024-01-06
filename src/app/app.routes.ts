@@ -9,6 +9,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/usuarios/perfil/perfil.component';
 import { AgregarUsuarioComponent } from './components/usuarios/agregar-usuario/agregar-usuario.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
+import { ClientesComponent } from './components/clientes/clientes.component';
+import { NuevoClienteComponent } from './components/clientes/nuevo-cliente/nuevo-cliente.component';
+import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor/nuevo-proveedor.component';
+import { VentasComponent } from './components/ventas/ventas.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -50,6 +54,26 @@ export const routes: Routes = [
   {
     path: 'proveedores',
     component: ProveedoresComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'nuevo-proveedor',
+    component: NuevoProveedorComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'clientes',
+    component: ClientesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'nuevo-cliente',
+    component: NuevoClienteComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'ventas',
+    component: VentasComponent,
     canActivate: [AuthGuard],
   },
   {

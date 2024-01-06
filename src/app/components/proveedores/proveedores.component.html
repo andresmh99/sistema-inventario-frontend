@@ -34,7 +34,7 @@
               </form>
            </div>
            <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-              <button [routerLink]="['/nuevo-producto']" routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-cyan-700 hover:bg-primary-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-cyan-700 focus:outline-none dark:focus:ring-cyan-800">
+              <button [routerLink]="['/nuevo-proveedor']" routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-cyan-700 hover:bg-primary-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-cyan-700 focus:outline-none dark:focus:ring-cyan-800">
                  <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                  </svg>
@@ -104,6 +104,7 @@
                     <th scope="col" class="px-4 py-3">Dirección</th>
                     <th scope="col" class="px-4 py-3">Contacto</th>
                     <th scope="col" class="px-4 py-3">Email</th>
+                    <th scope="col" class="px-4 py-3">Opciones</th>
                  </tr>
               </thead>
               <tbody>
@@ -114,6 +115,10 @@
                     <td class="px-4 py-3">{{item.direccion}}</td>
                     <td class="px-4 py-3">{{item.contacto}}</td>
                     <td class="px-4 py-3">{{item.email}}</td>
+                    <td class="px-1 py-3 flex items-center">
+                      <app-opciones *ngIf="item.id !=1" id="{{item.id}}" [proveedor]="item" (respuesta)="respuesta($event)">
+                      </app-opciones>
+                    </td>
                  </tr>
               </tbody>
            </table>
