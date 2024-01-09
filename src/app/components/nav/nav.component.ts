@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { LoginService } from '../../services/login.service';
 import { Usuario } from '../../interfaces/IUsuarios/usuarios';
 import { RouterModule } from '@angular/router';
+import { BtnMenuComponent } from './btn-menu/btn-menu.component';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, BtnMenuComponent],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css',
 })

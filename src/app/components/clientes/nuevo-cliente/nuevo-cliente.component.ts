@@ -31,10 +31,7 @@ export class NuevoClienteComponent {
     run: new FormControl(
       '',
       Validators.compose([
-        Validators.required,
-        Validators.pattern(
-          '/^(d{1,2}.d{3}.d{3}[-][0-9kK]{1}|^d{1,2}.d{3}.d{3})*$/'
-        ),
+        Validators.required
       ])
     ),
     nombre: new FormControl('', Validators.min(3)),
@@ -72,6 +69,9 @@ export class NuevoClienteComponent {
             }
           }
         });
+    }else{
+      console.log('creando cliente');
     }
+
   }
 }
