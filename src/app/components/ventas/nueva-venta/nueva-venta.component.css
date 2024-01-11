@@ -1,0 +1,10 @@
+.venta-layout{
+  display: grid;
+  width: 100%;
+  grid-template-areas: "cliente  boleta  boleta"
+                       "detalle boleta boleta";
+  grid-template-columns: 35% 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+

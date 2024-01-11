@@ -13,6 +13,7 @@ import { ClientesComponent } from './components/clientes/clientes.component';
 import { NuevoClienteComponent } from './components/clientes/nuevo-cliente/nuevo-cliente.component';
 import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor/nuevo-proveedor.component';
 import { VentasComponent } from './components/ventas/ventas.component';
+import { NuevaVentaComponent } from './components/ventas/nueva-venta/nueva-venta.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -74,6 +75,11 @@ export const routes: Routes = [
   {
     path: 'ventas',
     component: VentasComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'nueva-venta',
+    component: NuevaVentaComponent,
     canActivate: [AuthGuard],
   },
   {
