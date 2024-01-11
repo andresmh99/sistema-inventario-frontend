@@ -7,4 +7,14 @@
   grid-template-rows: 1fr auto;
 }
 
+@media screen and (max-width: 600px) {
+  .venta-layout{
+    grid-template-areas: "cliente "
+                         "detalle"
+                         "boleta";
+    grid-template-columns: 100% 1fr;
+    grid-template-rows: 1fr auto;
+  }
+}
+
 

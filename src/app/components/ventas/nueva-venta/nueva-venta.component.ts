@@ -163,6 +163,8 @@ export class NuevaVentaComponent {
       cantidad: cantidad,
       precioVenta: input.precioVenta,
     });
+    this.colorAlerta = 'green';
+    this.mensaje = 'Producto agregado'
     this.calcularTotal();
     this.venta.detallesVenta.push({ idProducto: input.id, cantidad: cantidad });
   }
