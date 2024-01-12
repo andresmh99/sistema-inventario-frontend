@@ -7,7 +7,7 @@ export interface IVentas {
   info?: Info;
   msj: string;
   ventas: Venta[];
-  venta?: Venta;
+  venta: Venta;
   skip: number;
 }
 

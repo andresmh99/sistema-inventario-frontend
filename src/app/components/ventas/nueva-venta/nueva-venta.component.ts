@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -10,21 +10,26 @@ import { Usuario } from '../../../interfaces/IUsuarios/usuarios';
 import { ClientesService } from '../../../services/clientes.service';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { Cliente } from '../../../interfaces/IClientes/clientes';
-import { catchError, map, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ProductosService } from '../../../services/productos.service';
-import {
-  Producto,
-  ProductoResponse,
-} from '../../../interfaces/IProductos/producto';
+import { ProductoResponse } from '../../../interfaces/IProductos/producto';
 import { IVentasRequest } from '../../../interfaces/IVentas/ventaRequest';
 import { detalleBoleta } from '../../../interfaces/IVentas/boleta';
 import { VentaService } from '../../../services/venta.service';
+import { Router } from '@angular/router';
+import { IVentas } from '../../../interfaces/IVentas/ventaResponse';
+import { MontoVentaComponent } from '../monto-venta/monto-venta.component';
 
 @Component({
   selector: 'app-nueva-venta',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MontoVentaComponent,
+  ],
   templateUrl: './nueva-venta.component.html',
   styleUrl: './nueva-venta.component.css',
 })
@@ -32,7 +37,9 @@ export class NuevaVentaComponent {
   constructor(
     private clientesService: ClientesService,
     private productosService: ProductosService,
-    private ventaService: VentaService
+    private ventaService: VentaService,
+    private respuestaService: RespuestaService,
+    private route: Router
   ) {}
 
   usuario: Usuario = {
@@ -79,14 +86,15 @@ export class NuevaVentaComponent {
     idUsuario: 0,
     detallesVenta: [],
   };
-
+  idVenta: number = 0;
+  modalMontoVenta: boolean = false;
   detalleBoleta: detalleBoleta[] = [];
   tiempo: Date = new Date();
   mensaje: string = '';
   colorAlerta: string = '';
   textoCliente: string = '';
   textoProducto: string = '';
-  cantidad: number = 0;
+  cantidad: number = 1;
   totalVenta: number = 0;
 
   clientes: Cliente[] = [];
@@ -164,7 +172,7 @@ export class NuevaVentaComponent {
       precioVenta: input.precioVenta,
     });
     this.colorAlerta = 'green';
-    this.mensaje = 'Producto agregado'
+    this.mensaje = 'Producto agregado';
     this.calcularTotal();
     this.venta.detallesVenta.push({ idProducto: input.id, cantidad: cantidad });
   }
@@ -200,8 +208,10 @@ export class NuevaVentaComponent {
       )
       .subscribe((res) => {
         if (res.body && res.status === 201) {
-          this.colorAlerta = 'green';
           this.mensaje = res.body.msj;
+          this.colorAlerta = 'green';
+          this.modalMontoVenta = true;
+          this.idVenta = res.body.venta.id
         } else {
           this.colorAlerta = 'red';
           this.mensaje = 'Ha ocurrido un problema';

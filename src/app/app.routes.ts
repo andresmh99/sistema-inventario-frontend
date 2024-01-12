@@ -14,6 +14,7 @@ import { NuevoClienteComponent } from './components/clientes/nuevo-cliente/nuevo
 import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor/nuevo-proveedor.component';
 import { VentasComponent } from './components/ventas/ventas.component';
 import { NuevaVentaComponent } from './components/ventas/nueva-venta/nueva-venta.component';
+import { MontoVentaComponent } from './components/ventas/monto-venta/monto-venta.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -80,6 +81,11 @@ export const routes: Routes = [
   {
     path: 'nueva-venta',
     component: NuevaVentaComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'monto-venta',
+    component: MontoVentaComponent,
     canActivate: [AuthGuard],
   },
   {
