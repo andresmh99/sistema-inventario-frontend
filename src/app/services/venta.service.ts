@@ -23,8 +23,8 @@ export class VentaService {
       observe: 'response',
     });
   }
-  eliminarVentaPendientePorPagar(id: string) {
-    return this.http.delete(`${this.url}/ventas/${id}`, {
+  eliminarVentaPendientePorPagar(id: number) {
+    return this.http.delete<IVentas>(`${this.url}/ventas/${id}`, {
       observe: 'response',
     });
   }

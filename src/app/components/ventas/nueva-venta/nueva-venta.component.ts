@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -11,14 +11,13 @@ import { ClientesService } from '../../../services/clientes.service';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { Cliente } from '../../../interfaces/IClientes/clientes';
 import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ProductosService } from '../../../services/productos.service';
 import { ProductoResponse } from '../../../interfaces/IProductos/producto';
 import { IVentasRequest } from '../../../interfaces/IVentas/ventaRequest';
 import { detalleBoleta } from '../../../interfaces/IVentas/boleta';
 import { VentaService } from '../../../services/venta.service';
 import { Router } from '@angular/router';
-import { IVentas } from '../../../interfaces/IVentas/ventaResponse';
 import { MontoVentaComponent } from '../monto-venta/monto-venta.component';
 
 @Component({
@@ -38,8 +37,7 @@ export class NuevaVentaComponent {
     private clientesService: ClientesService,
     private productosService: ProductosService,
     private ventaService: VentaService,
-    private respuestaService: RespuestaService,
-    private route: Router
+    private respuestaService: RespuestaService
   ) {}
 
   usuario: Usuario = {
@@ -80,7 +78,6 @@ export class NuevaVentaComponent {
       },
     },
   };
-
   venta: IVentasRequest = {
     idCliente: 0,
     idUsuario: 0,
@@ -88,14 +85,17 @@ export class NuevaVentaComponent {
   };
   idVenta: number = 0;
   modalMontoVenta: boolean = false;
+  montoPendiente: number = 0;
   detalleBoleta: detalleBoleta[] = [];
   tiempo: Date = new Date();
-  mensaje: string = '';
-  colorAlerta: string = '';
   textoCliente: string = '';
   textoProducto: string = '';
   cantidad: number = 1;
   totalVenta: number = 0;
+  respuesta = {
+    mensaje: '',
+    colorAlerta: '',
+  };
 
   clientes: Cliente[] = [];
   productos: ProductoResponse[] = [];
@@ -121,8 +121,8 @@ export class NuevaVentaComponent {
       .buscarCliente(this.textoCliente)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.mensaje = error.error.msj;
-          this.colorAlerta = 'yellow';
+          this.respuesta.mensaje = error.error.msj;
+          this.respuesta.colorAlerta = 'yellow';
           let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
 
           return throwError(errorMessage);
@@ -140,8 +140,8 @@ export class NuevaVentaComponent {
       .buscarProductos(this.textoProducto)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          this.mensaje = error.error.msj;
-          this.colorAlerta = 'yellow';
+          this.respuesta.mensaje = error.error.msj;
+          this.respuesta.colorAlerta = 'yellow';
           let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
 
           return throwError(errorMessage);
@@ -155,8 +155,8 @@ export class NuevaVentaComponent {
   }
 
   limpiarValores() {
-    this.mensaje = '';
-    this.colorAlerta = '';
+    this.respuesta.mensaje = '';
+    this.respuesta.colorAlerta = '';
     this.clientes = [];
   }
 
@@ -171,8 +171,8 @@ export class NuevaVentaComponent {
       cantidad: cantidad,
       precioVenta: input.precioVenta,
     });
-    this.colorAlerta = 'green';
-    this.mensaje = 'Producto agregado';
+    this.respuesta.colorAlerta = 'green';
+    this.respuesta.mensaje = 'Producto agregado';
     this.calcularTotal();
     this.venta.detallesVenta.push({ idProducto: input.id, cantidad: cantidad });
   }
@@ -189,8 +189,8 @@ export class NuevaVentaComponent {
     this.venta.detallesVenta.splice(i, 1);
     this.totalVenta = 0; // resetear la variable del total antes de volver a calcular
     this.calcularTotal();
-    this.colorAlerta = 'red';
-    this.mensaje = 'Producto Eliminado';
+    this.respuesta.colorAlerta = 'red';
+    this.respuesta.mensaje = 'Producto Eliminado';
   }
 
   crearVenta() {
@@ -198,9 +198,8 @@ export class NuevaVentaComponent {
       .crearVenta(this.venta)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log(error);
-          this.mensaje = error.error.msj;
-          this.colorAlerta = 'yellow';
+          this.respuesta.mensaje = error.error.msj;
+          this.respuesta.colorAlerta = 'yellow';
           let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
 
           return throwError(errorMessage);
@@ -208,13 +207,15 @@ export class NuevaVentaComponent {
       )
       .subscribe((res) => {
         if (res.body && res.status === 201) {
-          this.mensaje = res.body.msj;
-          this.colorAlerta = 'green';
+          this.respuesta.colorAlerta = 'green';
+          this.respuesta.mensaje = res.body.msj;
+          this.respuestaService.enviarRespuesta(this.respuesta);
+          this.montoPendiente = res.body.venta.montoPendiente;
           this.modalMontoVenta = true;
-          this.idVenta = res.body.venta.id
+          this.idVenta = res.body.venta.id;
         } else {
-          this.colorAlerta = 'red';
-          this.mensaje = 'Ha ocurrido un problema';
+          this.respuesta.colorAlerta = 'red';
+          this.respuesta.mensaje = 'Ha ocurrido un problema';
         }
       });
   }

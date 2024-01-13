@@ -1,16 +1,16 @@
 
 
 <div tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full bg-gray-900/50 dark:bg-gray-900/80 flex" *ngIf="modalMontoVenta" >
-  <div class="relative p-4 w-2/5  h-full md:h-auto">
-    <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{colorAlerta}}-300 text-{{colorAlerta}}-800 rounded-lg bg-{{colorAlerta}}-50 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400" role="alert" *ngIf="mensaje">
+  <div class="relative p-4 w-4/5 md:w-2/5 h-auto">
+    <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{respuesta.colorAlerta}}-300 text-{{respuesta.colorAlerta}}-800 rounded-lg bg-{{respuesta.colorAlerta}}-50 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400" role="alert" *ngIf="respuesta.mensaje">
        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
        </svg>
        <span class="sr-only">Info</span>
        <div class="ms-3 text-sm font-medium">
-          <span class="font-medium">¡Mensaje!</span> {{mensaje}}
+          <span class="font-medium">¡Mensaje!</span> {{respuesta.mensaje}}
        </div>
-       <button (click)="mensaje=''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-{{colorAlerta}}-50 text-{{colorAlerta}}-500 rounded-lg focus:ring-2 focus:ring-{{colorAlerta}}-400 p-1.5 hover:bg-{{colorAlerta}}-200 inline-flex items-center justify-center h-8 w-8 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400 dark:hover:bg-{{colorAlerta}}-700">
+       <button (click)="respuesta.mensaje=''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-{{respuesta.colorAlerta}}-50 text-{{respuesta.colorAlerta}}-500 rounded-lg focus:ring-2 focus:ring-{{respuesta.colorAlerta}}-400 p-1.5 hover:bg-{{respuesta.colorAlerta}}-200 inline-flex items-center justify-center h-8 w-8 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400 dark:hover:bg-{{respuesta.colorAlerta}}-700">
           <span class="sr-only">Close</span>
           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -22,8 +22,16 @@
        <!-- Modal header -->
        <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-             Nuevo Producto
+             Ingreso Pago venta
           </h3>
+          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" (click)="visibilidadModalMontoVenta()">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            <span class="sr-only">Close modal</span>
+        </button>
+       </div>
+       <div class="grid justify-end">
+        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Monto pendiente</label>
+        <span class="text-red-700 dark:text-red-500 text-md">{{montoPendiente | currency : 'CLP': '$ '}}</span>
        </div>
        <!-- Modal body -->
        <form class="needs-validation" novalidate (ngSubmit)="agregarMontoVenta()" [formGroup]="form">
