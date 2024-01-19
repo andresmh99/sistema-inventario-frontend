@@ -1,5 +1,5 @@
 <div class=" p-4 w-full max-w-2xl  m-auto">
-  <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{respuesta.colorAlerta}}-300 text-{{respuesta.colorAlerta}}-800 rounded-lg bg-{{respuesta.colorAlerta}}-50 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400" role="alert" *ngIf="respuesta.mensaje">
+  <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{respuesta.colorAlerta}}-300 text-{{respuesta.colorAlerta}}-800 rounded-lg bg-{{respuesta.colorAlerta}}-50 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-600" role="alert" *ngIf="respuesta.mensaje">
      <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
      </svg>
@@ -49,6 +49,26 @@
        </button>
 
      </div>
+     <div class="grid grid-cols-2 gap-4 my-2 rounded-t border-t dark:border-gray-600">
+      <div class="mt-2">
+        <span class="text-lg font-semibold text-gray-900 dark:text-white text-center my-2"> Monto Actual en caja:</span>
+      <div class="w-full my-2 md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-green-700 focus:outline-none bg-white rounded-lg border border-green-600 focus:z-10 focus:ring-4 focus:ring-green-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-green-500  dark:border-green-600">
+        <svg class="w-4 h-4 dark:text-green-500 text-green-700 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+        </svg>
+        <span class=""> {{caja.montoActual | currency: 'CLP': ''}} CLP</span>
+      </div>
+      </div>
+      <div class="mt-2">
+        <span class="text-lg font-semibold text-gray-900 dark:text-white text-center my-2"> Diferencia:</span>
+      <div class="w-full my-2 md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-{{colorDiferencia}}-700 focus:outline-none bg-white rounded-lg border border-{{colorDiferencia}}-600 focus:z-10 focus:ring-4 focus:ring-{{colorDiferencia}}-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-{{colorDiferencia}}-500  dark:border-{{colorDiferencia}}-600">
+        <svg class="w-4 h-4 dark:text-{{colorDiferencia}}-500 text-{{colorDiferencia}}-700 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+        </svg>
+        <span class=""> {{caja.montoActual - total | currency: 'CLP': ''}} CLP</span>
+      </div>
+      </div>
+     </div>
      <!-- Modal body -->
      <form class="needs-validation" novalidate (ngSubmit)="cerrarCaja()"
      [formGroup]="form">
@@ -62,15 +82,78 @@
         </div>
         <div class="sm:col-span-2">
            <label for="comentarios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentarios:</label>
-           <textarea id="comentarios" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Escriba una descripción del producto aqui" formControlName="comentarios"></textarea>
+           <textarea id="comentarios" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Escriba una observación del cierre de caja aqui" formControlName="comentarios"></textarea>
         </div>
      </div>
-     <button type="submit" class="text-white inline-flex items-center bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
+     <button type="button" (click)="modalConfirmarCierre()" class="text-white inline-flex items-center bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
         <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
         </svg>
-        Iniciar Caja
+        Cerrar Caja
      </button>
      </form>
   </div>
 </div>
+
+<!-- Main modal -->
+<div id="modalCierreCaja" *ngIf="modalCierreCaja" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full bg-gray-900/50 dark:bg-gray-900/80 flex">
+  <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="relative p-4  bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <button (click)="modalConfirmarCierre()" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+              <span class="sr-only">Close modal</span>
+          </button>
+          <h3 class="mb-4 text-lg font-bold text-gray-900 dark:text-white">¿Estas seguro?</h3>
+          <p class=" text-gray-500 dark:text-gray-300 text-justify ">Al llevar a cabo el cierre de caja, no será posible realizar ninguna modificación. Te instamos a revisar minuciosamente los datos antes de confirmar el proceso.</p>
+
+          <div class="my-4">
+            <div class="grid gap-2">
+              <span class="text-lg font-medium text-gray-900 dark:text-white">Detalles del Cierre:</span>
+              <div class="flex items-center ">
+                <svg class="w-4 h-4 text-gray-900 dark:text-gray-400 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="text-gray-900 dark:text-gray-400">Usuario: {{caja.usuario.nombre | titlecase}}
+                </span>
+              </div>
+              <div class="flex items-center ">
+                <svg class="w-4 h-4 text-gray-900 dark:text-gray-400 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="text-gray-900 dark:text-gray-400">
+                  Monto Cierre: {{total | currency : 'CLP': ''}} CLP
+                </span>
+              </div>
+              <div class="flex items-center ">
+                <svg class="w-4 h-4 text-gray-900 dark:text-gray-400 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="text-{{colorDiferencia}}-900 dark:text-{{colorDiferencia}}-400">
+                  Diferencia: {{diferencia | currency : 'CLP': ''}} CLP
+                </span>
+              </div>
+              <div class="flex items-center ">
+                <svg class="w-4 h-4 text-gray-900 dark:text-gray-400 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="text-gray-900 dark:text-gray-400">
+                  Fecha de cierre: {{fecha | date : 'dd/MM/YYY'}}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-center items-center space-x-4">
+              <button (click)="modalConfirmarCierre()" class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                  No, cancelar
+              </button>
+              <button (click)="cerrarCaja()" class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                  Cerrar Caja
+              </button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
