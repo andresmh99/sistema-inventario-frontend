@@ -17,8 +17,10 @@ import { ProductoResponse } from '../../../interfaces/IProductos/producto';
 import { IVentasRequest } from '../../../interfaces/IVentas/ventaRequest';
 import { detalleBoleta } from '../../../interfaces/IVentas/boleta';
 import { VentaService } from '../../../services/venta.service';
-import { Router } from '@angular/router';
 import { MontoVentaComponent } from '../monto-venta/monto-venta.component';
+import { CajaService } from '../../../services/caja.service';
+import { Caja } from '../../../interfaces/ICaja/caja';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nueva-venta',
@@ -28,6 +30,7 @@ import { MontoVentaComponent } from '../monto-venta/monto-venta.component';
     ReactiveFormsModule,
     FormsModule,
     MontoVentaComponent,
+    RouterModule,
   ],
   templateUrl: './nueva-venta.component.html',
   styleUrl: './nueva-venta.component.css',
@@ -37,7 +40,8 @@ export class NuevaVentaComponent {
     private clientesService: ClientesService,
     private productosService: ProductosService,
     private ventaService: VentaService,
-    private respuestaService: RespuestaService
+    private respuestaService: RespuestaService,
+    private cajaService: CajaService
   ) {}
 
   usuario: Usuario = {
@@ -79,12 +83,15 @@ export class NuevaVentaComponent {
     },
   };
   venta: IVentasRequest = {
+    idCaja: 0,
     idCliente: 0,
     idUsuario: 0,
     detallesVenta: [],
   };
+  caja: any = {};
   idVenta: number = 0;
   modalMontoVenta: boolean = false;
+  cajaNoActivaModal: boolean = false;
   montoPendiente: number = 0;
   detalleBoleta: detalleBoleta[] = [];
   tiempo: Date = new Date();
@@ -106,6 +113,7 @@ export class NuevaVentaComponent {
   });
   ngOnInit(): void {
     this.obtenerPerfil();
+    this.obtenerCajaActiva();
   }
   obtenerPerfil() {
     const perfil = localStorage.getItem('identity');
@@ -113,6 +121,26 @@ export class NuevaVentaComponent {
       this.usuario = JSON.parse(perfil);
       this.venta.idUsuario = this.usuario.id;
     }
+  }
+  obtenerCajaActiva() {
+    this.cajaService
+      .obtenerCajaActiva()
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.respuesta.mensaje = error.error.msj;
+          this.respuesta.colorAlerta = 'yellow';
+          let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
+          this.cajaNoActivaModal = true;
+
+          return throwError(errorMessage);
+        })
+      )
+      .subscribe((res) => {
+        if (res.body && res.status === 200) {
+          this.caja = res.body.caja;
+          this.venta.idCaja = res.body.caja.id;
+        }
+      });
   }
 
   buscarCliente() {

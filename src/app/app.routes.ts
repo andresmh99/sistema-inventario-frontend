@@ -15,6 +15,10 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
 import { VentasComponent } from './components/ventas/ventas.component';
 import { NuevaVentaComponent } from './components/ventas/nueva-venta/nueva-venta.component';
 import { MontoVentaComponent } from './components/ventas/monto-venta/monto-venta.component';
+import { CajasComponent } from './components/cajas/cajas.component';
+import { NuevaCajaComponent } from './components/cajas/nueva-caja/nueva-caja.component';
+import { CierreCajaComponent } from './components/cajas/cierre-caja/cierre-caja.component';
+import { ActualizarProductoComponent } from './components/productos/actualizar-producto/actualizar-producto.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -36,6 +40,11 @@ export const routes: Routes = [
   {
     path: 'nuevo-producto',
     component: AgregarProductoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'actualizar-producto',
+    component: ActualizarProductoComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -86,6 +95,21 @@ export const routes: Routes = [
   {
     path: 'monto-venta',
     component: MontoVentaComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'cajas',
+    component: CajasComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'iniciar-caja',
+    component: NuevaCajaComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'cerrar-caja',
+    component: CierreCajaComponent,
     canActivate: [AuthGuard],
   },
   {

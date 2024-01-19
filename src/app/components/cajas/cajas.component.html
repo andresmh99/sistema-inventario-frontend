@@ -1,44 +1,82 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
   <div class="mx-auto max-w-screen-xl px-4">
-     <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{colorAlerta}}-300 text-{{colorAlerta}}-800 rounded-lg bg-{{colorAlerta}}-50 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400" role="alert" *ngIf="mensaje">
-        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-           <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-        </svg>
-        <span class="sr-only">Info</span>
-        <div class="ms-3 text-sm font-medium">
-           <span class="font-medium">¡Mensaje!</span> {{mensaje}}
-        </div>
-        <button (click)="mensaje=''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-{{colorAlerta}}-50 text-{{colorAlerta}}-500 rounded-lg focus:ring-2 focus:ring-{{colorAlerta}}-400 p-1.5 hover:bg-{{colorAlerta}}-200 inline-flex items-center justify-center h-8 w-8 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400 dark:hover:bg-{{colorAlerta}}-700">
-           <span class="sr-only">Close</span>
-           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-           </svg>
-        </button>
-     </div>
+    <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{respuesta.colorAlerta}}-300 text-{{respuesta.colorAlerta}}-800 rounded-lg bg-{{respuesta.colorAlerta}}-50 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400" role="alert" *ngIf="respuesta.mensaje">
+      <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+      </svg>
+      <span class="sr-only">Info</span>
+      <div class="ms-3 text-sm font-medium">
+         <span class="font-medium">¡Mensaje!</span> {{respuesta.mensaje}}
+      </div>
+      <button (click)="respuesta.mensaje=''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-{{respuesta.colorAlerta}}-50 text-{{respuesta.colorAlerta}}-500 rounded-lg focus:ring-2 focus:ring-{{respuesta.colorAlerta}}-400 p-1.5 hover:bg-{{respuesta.colorAlerta}}-200 inline-flex items-center justify-center h-8 w-8 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400 dark:hover:bg-{{respuesta.colorAlerta}}-700">
+         <span class="sr-only">Close</span>
+         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+         </svg>
+      </button>
+   </div>
   </div>
   <div class="mx-auto max-w-screen-xl px-4 ">
+    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden mb-4" *ngIf="cajaActiva.length">
+      <!-- Start coding here -->
+      <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+
+         <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+            <button [routerLink]="['/cerrar-caja']" [queryParams]="{id: idCaja, mactual: cajaActiva[0].montoActual}"  routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+              <svg class="h-3.5 w-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+             </svg>
+              Cerrar Caja
+           </button>
+           <button  routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-amber-600 dark:hover:bg-amber-700 focus:outline-none dark:focus:ring-amber-800">
+            <svg class="h-3.5 w-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+           </svg>
+            Añadir gasto
+         </button>
+            <div class="flex items-center space-x-3 w-full md:w-auto">
+
+            </div>
+         </div>
+      </div>
+      <div class="overflow-x-auto">
+         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+               <tr>
+                  <th scope="col" class="px-2 py-3 text-center">N°</th>
+                  <th scope="col" class="px-2 py-3 text-center">Fecha</th>
+                  <th scope="col" class="px-2 py-3 text-center">Monto Inicial</th>
+                  <th scope="col" class="px-2 py-3 text-center">Efectivo recaudado</th>
+                  <th scope="col" class="px-2 py-3 text-center">Responsable</th>
+                  <th scope="col" class="px-2 py-3 text-center">N° Ventas</th>
+
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="border-b dark:border-gray-700" *ngFor="let item of cajaActiva; index as i">
+                  <td class="px-2 py-3 text-center">{{i +1}}</td>
+                  <td class="px-2 py-3 text-center">{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
+                  <td class="px-2 py-3 text-center">{{item.montoInicial | currency: 'CLP': ''}} CLP</td>
+                  <td class="px-2 py-3 text-center">{{item.montoActual | currency: 'CLP': ''}} CLP</td>
+                  <td class="px-2 py-3 text-center">{{item.usuario.nombre | titlecase}} {{item.usuario.apellido | titlecase}}</td>
+                  <td class="px-2 py-3 text-center">{{item._count.ventas}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
      <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
         <!-- Start coding here -->
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
            <div class="w-full md:w-1/2">
-              <form class="flex items-center">
-                 <label for="simple-search" class="sr-only">Buscar</label>
-                 <div class="relative w-full">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                       <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                       </svg>
-                    </div>
-                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="textoProducto" [(ngModel)]="textoProducto"  (keyup)="buscarProducto()" placeholder="Buscar" required="" autofocus>
-                 </div>
-              </form>
            </div>
            <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-              <button [routerLink]="['/nuevo-producto']" routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-cyan-700 hover:bg-primary-800 focus:ring-4 focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-cyan-700 focus:outline-none dark:focus:ring-cyan-800">
-                 <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                 </svg>
-                 Agregar Producto
+
+              <button [routerLink]="['/iniciar-caja']" routerLinkActive="router-link-active"   routerLinkActive="router-link-active"  type="button" class="flex items-center justify-center text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800" *ngIf="!cajaActiva.length">
+                 <svg class="h-3.5 w-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+                </svg>
+                 Iniciar Caja
               </button>
               <div class="flex items-center space-x-3 w-full md:w-auto">
                  <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
@@ -94,76 +132,27 @@
               </div>
            </div>
         </div>
-       <!-- <div class="mx-4 mt-2 w-full overflow-x-auto">
-           <div class="bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-lg mb-4 p-3 border border-gray-600 hover:bg-gray-100  dark:border-gray-600 dark:hover:bg-gray-600" *ngFor="let item of productos; index as i">
-              <div class=" flex flex-row items-center justify-between">
-                 <div class=" grid gap-2 ">
-                    <img [src]="item.secure_image_url" alt="{{item.nombreProducto}}" class="block align-middle w-20 h-auto rounded-lg">
-                    <span class=" font-extralight ">SKU: {{item.sku}}</span>
-                 </div>
-                 <div class="flex flex-col justify-between ml-3 mr-6 space-x-0">
-                    <div class="grid grid-cols-7 gap-1 w-full">
-                       <div class="flex flex-col h-full  col-span-2  ">
-                          <h3 class=" mb-3 font-semibold text-gray-900 whitespace-nowrap dark:text-white">{{item.nombreProducto | titlecase}}</h3>
-                          <div>
-                             <h6 class=" font-normal">Categoria:</h6>
-                             <p class=" font-semibold text-gray-900 whitespace-nowrap dark:text-white">{{item.categoria.nombreCategoria | titlecase}}</p>
-                          </div>
-                       </div>
-                       <div>
-                          <h6>$ Venta:</h6>
-                          <p class="text-gray-900 whitespace-nowrap dark:text-white">{{item.precioVenta | currency}}</p>
-                       </div>
-                       <div>
-                          <h6>Marca:</h6>
-                          <p class="text-gray-900 whitespace-nowrap dark:text-white">{{item.marca | titlecase}}</p>
-                       </div>
-                       <div>
-                          <h6>Stock:</h6>
-                          <p class="text-gray-900 whitespace-nowrap dark:text-white">{{item.stock |number}}</p>
-                       </div>
-                       <div class=" text-end ">
-                          <button>
-                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-                             </svg>
-                          </button>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </div>-->
         <div class="overflow-x-auto">
            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                  <tr>
-                    <th scope="col" class="px-4 py-3">N°</th>
-                    <th scope="col" class="px-4 py-3">Imagen</th>
-                    <th scope="col" class="px-4 py-3">Nombre Producto</th>
-                    <th scope="col" class="px-4 py-3">Categoria</th>
-                    <th scope="col" class="px-4 py-3">Marca</th>
-                    <th scope="col" class="px-4 py-3">Stock</th>
-                    <th scope="col" class="px-4 py-3">Precio Venta</th>
-                    <th scope="col" class="px-4 py-3">Opciones</th>
+                    <th scope="col" class="px-2 py-3 text-center">N°</th>
+                    <th scope="col" class="px-2 py-3 text-center">Fecha</th>
+                    <th scope="col" class="px-2 py-3 text-center">Monto Inicial</th>
+                    <th scope="col" class="px-2 py-3 text-center">Efectivo recaudado</th>
+                    <th scope="col" class="px-2 py-3 text-center">Responsable</th>
+                    <th scope="col" class="px-2 py-3 text-center">N° Ventas</th>
+
                  </tr>
               </thead>
               <tbody>
-                 <tr class="border-b dark:border-gray-700" *ngFor="let item of productos; index as i">
-                    <td class="px-4 py-3">{{item.id}}</td>
-                    <td class="px-4 py-3 "><img [src]="item.secure_image_url"
-                       alt="{{item.nombreProducto}}" class="rounded-lg max-h-12" ></td>
-                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                       <app-detalles [producto]="item">{{item.nombreProducto}}</app-detalles>
-                    </th>
-                    <td class="px-4 py-3">{{item.categoria.nombreCategoria}}</td>
-                    <td class="px-4 py-3">{{item.marca}}</td>
-                    <td class="px-4 py-3">{{item.stock}}</td>
-                    <td class="px-4 py-3">{{item.precioVenta | currency : 'CLP': ''}} CLP</td>
-                    <td class="px-1 py-3 flex items-center">
-                       <app-opciones [producto]="item" (actualizarTabla)="actualizarTabla()">
-                       </app-opciones>
-                    </td>
+                 <tr class="border-b dark:border-gray-700" *ngFor="let item of cajas; index as i">
+                    <td class="px-2 py-3 text-center">{{i +1}}</td>
+                    <td class="px-2 py-3 text-center">{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
+                    <td class="px-2 py-3 text-center">{{item.montoInicial | currency: 'CLP': ''}} CLP</td>
+                    <td class="px-2 py-3 text-center">{{item.montoActual | currency: 'CLP': ''}} CLP</td>
+                    <td class="px-2 py-3 text-center">{{item.usuario.nombre | titlecase}} {{item.usuario.apellido | titlecase}}</td>
+                    <td class="px-2 py-3 text-center">{{item._count.ventas}}</td>
                  </tr>
               </tbody>
            </table>

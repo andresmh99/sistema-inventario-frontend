@@ -28,12 +28,12 @@ export class ProductosService {
     });
   }
 
-  eliminarProducto(id: string) {
+  eliminarProducto(id: number) {
     return this.http.delete<IProducto>(`${this.url}/productos/${id}`, {
       observe: 'response',
     });
   }
-  obtenerProductoPorId(id: string) {
+  obtenerProductoPorId(id: number) {
     return this.http.get<IProducto>(`${this.url}/productos/${id}`, {
       observe: 'response',
     });
@@ -44,7 +44,7 @@ export class ProductosService {
       observe: 'response',
     });
   }
-  actualizarProducto(id: string, data: any) {
+  actualizarProducto(id: number, data: FormData) {
     return this.http.put<IProducto>(`${this.url}/productos/${id}`, data, {
       observe: 'response',
     });

@@ -1,6 +1,6 @@
 <div >
-  <div tabindex="-1" class="bg-gray-50 dark:bg-gray-900">
-     <div class="relative p-4 w-full h-full md:h-auto">
+  <div class="bg-gray-50 dark:bg-gray-900">
+     <div class=" p-4 h-full max-w-screen-lg m-auto">
         <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{colorAlerta}}-300 text-{{colorAlerta}}-800 rounded-lg bg-{{colorAlerta}}-50 dark:bg-{{colorAlerta}}-800 dark:text-{{colorAlerta}}-400" role="alert" *ngIf="mensaje">
            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
@@ -72,8 +72,8 @@
                  </div>
               </div>
               <div>
-                 <label for="categoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria:</label>
-                 <select id="categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="idcategoria" required formControlName="categoria">
+                 <label for="idCategoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria:</label>
+                 <select id="idCategoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="idCategoria" required formControlName="idCategoria">
                     <option  [selected]="categoria" value="{{categoria.id}}">{{categoria.nombreCategoria}}</option>
                     <option value="{{item.id}}" *ngFor="let item of categorias" >{{item.nombreCategoria}}</option>
 

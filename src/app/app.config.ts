@@ -14,7 +14,7 @@ import { ErrorApiInterceptor } from './common/interceptors/error-api.interceptor
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptors([ApiInterceptor, ErrorApiInterceptor])),
+    provideHttpClient(withFetch(),withInterceptors([ApiInterceptor, ErrorApiInterceptor])),
     AuthGuard
   ],
 };

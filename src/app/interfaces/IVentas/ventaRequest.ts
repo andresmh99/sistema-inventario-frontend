@@ -1,4 +1,5 @@
 export interface IVentasRequest {
+  idCaja: number;
   idUsuario:     number;
   idCliente:     number;
   detallesVenta: DetallesVenta[];

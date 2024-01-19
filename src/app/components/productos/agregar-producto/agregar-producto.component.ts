@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Producto } from '../../../interfaces/IProductos/producto';
 import {
@@ -6,11 +6,9 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { ProductosService } from '../../../services/productos.service';
 import { CategoriasService } from '../../../services/categorias.service';
-import { RespuestaBackend } from '../../../interfaces/respuesta-backend';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoriasComponent } from '../../categorias/categorias.component';
@@ -18,7 +16,6 @@ import { Router, RouterModule } from '@angular/router';
 import { RespuestaService } from '../../../services/respuesta.service';
 import { NuevaCategoriaComponent } from '../../categorias/nueva-categoria/nueva-categoria.component';
 import { Categoria } from '../../../interfaces/ICategorias/categorias';
-import { arrayBuffer } from 'stream/consumers';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -95,7 +92,7 @@ export class AgregarProductoComponent {
     stock: new FormControl(''),
     imagen: new FormControl(),
     sourceFile: new FormControl(),
-    categoria: new FormControl(''),
+    idCategoria: new FormControl(''),
   });
 
   crearProducto() {
@@ -103,7 +100,6 @@ export class AgregarProductoComponent {
     const submitter = document.getElementById('btnSubmit');
     if (form) {
       const formData = new FormData(form, submitter);
-
       this.productosService
         .crearProducto(formData)
         .pipe(

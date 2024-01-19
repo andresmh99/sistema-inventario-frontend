@@ -88,7 +88,6 @@ export class MontoVentaComponent {
       .crearMontoVenta(this.idVenta, this.form.value)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log(error);
           this.respuesta.mensaje = error.error.msj;
           this.respuesta.colorAlerta = 'yellow';
           let errorMessage = error.error.msj; // Mensaje predeterminado en caso de error desconocido
@@ -98,7 +97,6 @@ export class MontoVentaComponent {
       )
       .subscribe((res) => {
         if (res.body) {
-          console.log(res.body);
           this.montoPendiente = res.body.montoPendiente;
           this.respuesta.mensaje = res.body.msj;
           this.respuesta.colorAlerta = 'green';
