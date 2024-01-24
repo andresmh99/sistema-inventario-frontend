@@ -1,0 +1,24 @@
+{
+  "routes": [
+    "/",
+    "/actualizar-producto",
+    "/cajas",
+    "/categorias",
+    "/cerrar-caja",
+    "/clientes",
+    "/dashboard",
+    "/iniciar-caja",
+    "/login",
+    "/monto-venta",
+    "/nueva-venta",
+    "/nuevo-cliente",
+    "/nuevo-producto",
+    "/nuevo-proveedor",
+    "/nuevo-usuario",
+    "/perfil",
+    "/productos",
+    "/proveedores",
+    "/usuarios",
+    "/ventas"
+  ]
+}
