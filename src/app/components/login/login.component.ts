@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, afterRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
@@ -20,7 +20,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router) {
+    afterRender(()=>{
+    })
+  }
 
   ngOnInit(): void {}
 
@@ -28,6 +31,7 @@ export class LoginComponent {
   dataError: string = '';
   mensaje: string = '';
   colorAlerta: string = '';
+
   textoError = {
     usuario: '',
     password: '',
@@ -100,6 +104,8 @@ export class LoginComponent {
       }
     }
   }
+
+
   inputAlterado(input: string) {
     const inputColor: HTMLInputElement = document.getElementById(
       input

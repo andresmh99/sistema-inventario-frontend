@@ -94,6 +94,46 @@
               </div>
            </div>
         </div>
+       <!-- <div class="mx-4 mt-2 w-full overflow-x-auto">
+           <div class="bg-gray-50 dark:bg-gray-700 dark:text-gray-400 rounded-lg mb-4 p-3 border border-gray-600 hover:bg-gray-100  dark:border-gray-600 dark:hover:bg-gray-600" *ngFor="let item of productos; index as i">
+              <div class=" flex flex-row items-center justify-between">
+                 <div class=" grid gap-2 ">
+                    <img [src]="item.secure_image_url" alt="{{item.nombreProducto}}" class="block align-middle w-20 h-auto rounded-lg">
+                    <span class=" font-extralight ">SKU: {{item.sku}}</span>
+                 </div>
+                 <div class="flex flex-col justify-between ml-3 mr-6 space-x-0">
+                    <div class="grid grid-cols-7 gap-1 w-full">
+                       <div class="flex flex-col h-full  col-span-2  ">
+                          <h3 class=" mb-3 font-semibold text-gray-900 whitespace-nowrap dark:text-white">{{item.nombreProducto | titlecase}}</h3>
+                          <div>
+                             <h6 class=" font-normal">Categoria:</h6>
+                             <p class=" font-semibold text-gray-900 whitespace-nowrap dark:text-white">{{item.categoria.nombreCategoria | titlecase}}</p>
+                          </div>
+                       </div>
+                       <div>
+                          <h6>$ Venta:</h6>
+                          <p class="text-gray-900 whitespace-nowrap dark:text-white">{{item.precioVenta | currency}}</p>
+                       </div>
+                       <div>
+                          <h6>Marca:</h6>
+                          <p class="text-gray-900 whitespace-nowrap dark:text-white">{{item.marca | titlecase}}</p>
+                       </div>
+                       <div>
+                          <h6>Stock:</h6>
+                          <p class="text-gray-900 whitespace-nowrap dark:text-white">{{item.stock |number}}</p>
+                       </div>
+                       <div class=" text-end ">
+                          <button>
+                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                             </svg>
+                          </button>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>-->
         <div class="overflow-x-auto">
            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

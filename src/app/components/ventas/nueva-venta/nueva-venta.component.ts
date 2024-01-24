@@ -206,6 +206,7 @@ export class NuevaVentaComponent {
   }
 
   calcularTotal() {
+    this.totalVenta = 0;
     for (let i = 0; i < this.detalleBoleta.length; i++) {
       const element = this.detalleBoleta[i];
       let subtotal = element.cantidad * element.precioVenta;
