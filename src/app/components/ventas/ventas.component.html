@@ -45,7 +45,8 @@
                  </tr>
               </thead>
               <tbody>
-                 <tr class="border-b dark:border-gray-700" *ngFor="let item of ventasNoPagadas; index as i">
+                @for(item of ventasNoPagadas; track item.id ){
+                  <tr class="border-b dark:border-gray-700">
                     <td class="px-4 py-3">{{ item.id }}</td>
                     <td class="px-4 py-3">{{ item.montoTotal | currency : 'CLP': '$ '}}</td>
                     <td class="px-4 py-3">{{ item.montoPendiente | currency : 'CLP': '$ ' }} </td>
@@ -65,6 +66,7 @@
                      </button>
                     </td>
                  </tr>
+                }
               </tbody>
            </table>
         </div>
@@ -149,7 +151,8 @@
                  </tr>
               </thead>
               <tbody>
-                 <tr class="border-b dark:border-gray-700" *ngFor="let venta of ventasPagadas; index as i">
+                 @for(venta of ventasPagadas; track venta.id){
+                  <tr class="border-b dark:border-gray-700">
                     <td class="px-4 py-3">{{ venta.id }}</td>
                     <td class="px-4 py-3">{{ venta.montoTotal | currency }} CLP</td>
                     <td class="px-4 py-3">{{ venta.fecha | date: 'dd/MM/yyyy' }}</td>
@@ -157,6 +160,7 @@
                     <td class="px-4 py-3">{{ venta.cliente.nombre | titlecase }}</td>
                     <!-- Agrega más columnas según sea necesario -->
                  </tr>
+                 }
               </tbody>
            </table>
         </div>

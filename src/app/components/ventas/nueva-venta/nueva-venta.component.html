@@ -1,20 +1,20 @@
 <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
   <div class="mx-auto max-w-screen-xl px-4">
-    <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{respuesta.colorAlerta}}-300 text-{{respuesta.colorAlerta}}-800 rounded-lg bg-{{respuesta.colorAlerta}}-50 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400" role="alert" *ngIf="respuesta.mensaje">
-      <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-      </svg>
-      <span class="sr-only">Info</span>
-      <div class="ms-3 text-sm font-medium">
-         <span class="font-medium">¡Mensaje!</span> {{respuesta.mensaje}}
-      </div>
-      <button (click)="respuesta.mensaje=''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-{{respuesta.colorAlerta}}-50 text-{{respuesta.colorAlerta}}-500 rounded-lg focus:ring-2 focus:ring-{{respuesta.colorAlerta}}-400 p-1.5 hover:bg-{{respuesta.colorAlerta}}-200 inline-flex items-center justify-center h-8 w-8 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400 dark:hover:bg-{{respuesta.colorAlerta}}-700">
-         <span class="sr-only">Close</span>
-         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-         </svg>
-      </button>
-   </div>
+     <div id="alert-1" class="flex items-center p-4 mb-4 border border-{{respuesta.colorAlerta}}-300 text-{{respuesta.colorAlerta}}-800 rounded-lg bg-{{respuesta.colorAlerta}}-50 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400" role="alert" *ngIf="respuesta.mensaje">
+        <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+           <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        </svg>
+        <span class="sr-only">Info</span>
+        <div class="ms-3 text-sm font-medium">
+           <span class="font-medium">¡Mensaje!</span> {{respuesta.mensaje}}
+        </div>
+        <button (click)="respuesta.mensaje=''" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-{{respuesta.colorAlerta}}-50 text-{{respuesta.colorAlerta}}-500 rounded-lg focus:ring-2 focus:ring-{{respuesta.colorAlerta}}-400 p-1.5 hover:bg-{{respuesta.colorAlerta}}-200 inline-flex items-center justify-center h-8 w-8 dark:bg-{{respuesta.colorAlerta}}-800 dark:text-{{respuesta.colorAlerta}}-400 dark:hover:bg-{{respuesta.colorAlerta}}-700">
+           <span class="sr-only">Close</span>
+           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+           </svg>
+        </button>
+     </div>
   </div>
   <main class="p-4 h-auto">
      <div class="gap-4 mb-4 venta-layout ">
@@ -55,9 +55,13 @@
                        <tbody>
                           <tr class="border-b dark:border-gray-700" *ngFor="let item of clientes; index as i">
                              <td class="px-3 py-3 truncate">{{item.nombre | titlecase}}</td>
-                          <td class="px-3 py-3 text-center"><button class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" (click)="agregarCliente(item)"><svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                          </svg></button></td>
+                             <td class="px-3 py-3 text-center">
+                                <button class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" (click)="agregarCliente(item)">
+                                   <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                   </svg>
+                                </button>
+                             </td>
                              <!-- Agrega más columnas según sea necesario -->
                           </tr>
                        </tbody>
@@ -91,7 +95,7 @@
                  <h5 for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RUN Cliente:</h5>
                  <p class="text-gray-900 dark:text-white text-xs">{{cliente.run}}</p>
               </div>
-              <div class="sm:col-span-2">
+
                  <h5 for="name" class="block mb-2 font-bold text-gray-900 dark:text-white">Descripción:</h5>
                  <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden" *ngIf="detalleBoleta.length">
                     <div class=" overflow-x-auto">
@@ -114,34 +118,34 @@
                                 <td class="px-4 py-3 text-center">{{item.cantidad}}</td>
                                 <td class="px-4 py-3 text-center">{{item.precioVenta | currency}} CLP</td>
                                 <td class="px-4 py-3 text-center">{{item.precioVenta * item.cantidad | currency}} CLP</td>
-                                <td class="px-4 py-3 text-center"><button (click)="eliminarProductoBoleta(i)" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-light rounded-lg text-sm px-4 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"><svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
-                                </svg></button></td>
-
+                                <td class="px-4 py-3 text-center">
+                                   <button (click)="eliminarProductoBoleta(i)" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-light rounded-lg text-sm px-4 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                      <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                                      </svg>
+                                   </button>
+                                </td>
                                 <!-- Agrega más columnas según sea necesario -->
                              </tr>
                           </tbody>
                        </table>
                     </div>
                  </div>
-              </div>
            </div>
            <div class="flex justify-end my-4" *ngIf="detalleBoleta.length">
-            <div class="grid grid-cols-2 gap-3">
-
-                <h5 for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total a pagar:</h5>
+              <div class="grid grid-cols-2 gap-3">
+                 <h5 for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total a pagar:</h5>
                  <span class="text-gray-900 dark:text-white text-lg">{{totalVenta | currency}} CLP</span>
-
-            </div>
+              </div>
            </div>
-          <div class="flex justify-end" *ngIf="detalleBoleta.length">
-            <button type="submit" (click)="crearVenta()" class="text-white inline-flex items-center bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
-              <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-              </svg>
-              Generar Venta
-           </button>
-          </div>
+           <div class="flex justify-end" *ngIf="detalleBoleta.length">
+              <button type="submit" (click)="crearVenta()" class="text-white inline-flex items-center bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-cyan-800">
+                 <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+                 </svg>
+                 Generar Venta
+              </button>
+           </div>
         </div>
         <div class="[grid-area:detalle] relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
            <!-- Modal header -->
@@ -185,9 +189,13 @@
                           <td class="px-3 py-3 truncate">{{item.nombreProducto | titlecase}}</td>
                           <td class="px-3 py-3 text-center">{{item.stock}}</td>
                           <td class="px-3 py-3 text-center"><input type="number" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full text-center p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="textoProducto" min="1" max="{{item.stock}}" [(ngModel)]="cantidad" placeholder="" required="" autofocus></td>
-                          <td class="px-3 py-3 text-center"><button class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" (click)="agregarProducto(item, cantidad)"><svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                          </svg></button></td>
+                          <td class="px-3 py-3 text-center">
+                             <button class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" (click)="agregarProducto(item, cantidad)">
+                                <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                </svg>
+                             </button>
+                          </td>
                           <!-- Agrega más columnas según sea necesario -->
                        </tr>
                     </tbody>
@@ -199,22 +207,21 @@
   </main>
 </section>
 <app-monto-venta [modalMontoVenta]="modalMontoVenta" [idVenta]="idVenta" [montoPendiente]="montoPendiente"></app-monto-venta>
-
 <!-- Main modal -->
 <div *ngIf="cajaNoActivaModal" tabindex="-1" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full  bg-gray-900/50 dark:bg-gray-900/80 flex">
   <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-      <!-- Modal content -->
-      <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-          <h3 class="mb-4 text-gray-500 dark:text-white text-lg font-semibold">{{usuario.nombre | titlecase}} {{usuario.apellido | titlecase}}</h3>
-          <p class="mb-4 text-gray-500 dark:text-gray-300">{{respuesta.mensaje}}</p>
-          <div class="flex justify-center items-center space-x-4">
-              <button [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  type="button" class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                  Ir al Dashboard
-              </button>
-              <button [routerLink]="['/iniciar-caja']" class="py-2 px-3 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-900">
-                  Iniciar Caja
-              </button>
-          </div>
-      </div>
+     <!-- Modal content -->
+     <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+        <h3 class="mb-4 text-gray-500 dark:text-white text-lg font-semibold">{{usuario.nombre | titlecase}} {{usuario.apellido | titlecase}}</h3>
+        <p class="mb-4 text-gray-500 dark:text-gray-300">{{respuesta.mensaje}}</p>
+        <div class="flex justify-center items-center space-x-4">
+           <button [routerLink]="['/dashboard']" routerLinkActive="router-link-active"  type="button" class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+           Ir al Dashboard
+           </button>
+           <button [routerLink]="['/iniciar-caja']" class="py-2 px-3 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-900">
+           Iniciar Caja
+           </button>
+        </div>
+     </div>
   </div>
 </div>

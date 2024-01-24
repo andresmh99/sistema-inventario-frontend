@@ -13,6 +13,7 @@ import {
 } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Caja } from '../../../interfaces/ICaja/caja';
 
 interface Denominacion {
   nombre: string;
@@ -34,6 +35,7 @@ export class CierreCajaComponent {
 
   ngOnInit(): void {
     this.obtenerParametrosUrl();
+    this.obtenerCajaPorId();
   }
 
   montoActual: number = 0;
@@ -54,8 +56,20 @@ export class CierreCajaComponent {
       nombreRol: '',
     },
   };
+  caja: any = {
+    id: 0,
+    idUsuario: 0,
+    montoInicial: 0,
+    montoActual: 0,
+    estado: false,
+    ventas: [],
+  };
   cantidadBilletes: { [key: string]: number } = {};
   total: number = 0;
+  diferencia: number = 0;
+  colorDiferencia: string = 'red';
+  modalCierreCaja: boolean = false;
+  fecha: Date = new Date();
 
   form = new FormGroup({
     idCaja: new FormControl(0),
@@ -81,22 +95,47 @@ export class CierreCajaComponent {
     this.montoActual = url.queryParams['mactual'];
   }
 
+  obtenerCajaPorId() {
+    this.cajaService.obtenerCajaPorId(this.idCaja).subscribe((res) => {
+      if (res.body) {
+        this.caja = res.body.caja;
+        this.diferencia = this.caja.montoActual;
+      }
+    });
+  }
+  modalConfirmarCierre() {
+    this.modalCierreCaja = !this.modalCierreCaja;
+  }
+
   calcularTotal() {
+    this.respuesta.mensaje = '';
     this.total = 0;
     for (const denominacion of this.denominaciones) {
       const cantidad = this.cantidadBilletes[denominacion.nombre] || 0;
       this.total += cantidad * denominacion.valor;
+      this.diferencia = this.caja.montoActual - this.total;
+      if (this.diferencia === 0) {
+        this.colorDiferencia = 'green';
+      } else if (this.diferencia < 0) {
+        this.respuesta.colorAlerta = 'red';
+        this.respuesta.mensaje =
+          'El valor ingresado para el cierre es superior al monto actual existente en caja, por favor verifica el monto de cierre';
+        this.colorDiferencia = 'red';
+      } else {
+        this.colorDiferencia = 'red';
+      }
     }
   }
   limpiarInputs() {
+    this.respuesta.mensaje = '';
     this.cantidadBilletes = {}; // Reinicia el objeto a un objeto vacío
     this.total = 0; // Reinicia el total a cero
+    this.colorDiferencia = 'red';
   }
 
   cerrarCaja() {
-
     this.form.value.idCaja = Number(this.idCaja);
-    this.form.value.montoCierre = this.total
+    this.form.value.montoCierre = this.total;
     console.log(this.form.value.montoCierre);
     this.cajaService
       .cerrarCaja(this.form.value)
