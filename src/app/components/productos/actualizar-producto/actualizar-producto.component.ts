@@ -81,7 +81,7 @@ export class ActualizarProductoComponent {
   }
   obtenerParametrosUrl() {
     const url = this.router.parseUrl(this.router.url);
-    this.id = url.queryParams['id'];
+    this.id = parseInt(url.queryParams['id']);
   }
 
   obtenerProductoPorId() {
